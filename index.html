@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="pageTitle">Plano de Lançamento: App de Restaurantes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .nav-button { padding: 0.5rem 1rem; border-radius: 0.375rem; transition: background-color 0.3s, color 0.3s; }
+        .nav-button.active, .nav-button:hover { background-color: #0369a1; color: white; }
+        .accordion-header { cursor: pointer; padding: 1rem 1.5rem; background-color: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 0.375rem; margin-bottom: 0.5rem; transition: background-color 0.3s; }
+        .accordion-header:hover { background-color: #cbd5e1; }
+        .accordion-content { display: none; padding: 1.5rem; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 0.375rem 0.375rem; background-color: #f8fafc; }
+        .us-list li { padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; }
+        .us-list li:last-child { border-bottom: none; }
+        .lang-switcher { padding: 0.25rem 0.75rem; border: 1px solid #94a3b8; border-radius: 0.375rem; background-color: transparent; color: white; transition: background-color 0.3s; }
+        .lang-switcher.active { background-color: #0ea5e9; border-color: #0ea5e9; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800">
+
+    <header class="bg-sky-800 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-2xl font-bold mb-2 sm:mb-0" data-translate-key="headerTitle">App de Restaurantes: Plano de Lançamento</h1>
+            <div class="flex items-center gap-4">
+                <nav id="mainNav" class="flex flex-wrap justify-center gap-2">
+                    <button data-section="visaoGeralSection" class="nav-button active" data-translate-key="nav_overview">Visão Geral</button>
+                    <button data-section="planoLancamentoSection" class="nav-button" data-translate-key="nav_release_plan">Plano de Lançamento</button>
+                    <button data-section="perfisUsuarioSection" class="nav-button" data-translate-key="nav_user_profiles">Perfis de Usuário</button>
+                </nav>
+                <div id="lang-selector" class="flex gap-2 border-l border-sky-600 pl-4">
+                    <button class="lang-switcher" data-lang="pt">PT</button>
+                    <button class="lang-switcher" data-lang="en">EN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="visaoGeralSection" class="content-section active">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6" data-translate-key="overview_title">Visão Geral e Estratégia de Lançamento</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="mb-4" data-translate-key="overview_p1">Esta página apresenta os requisitos para o "App de Restaurantes", organizados num plano de lançamento faseado. A estratégia visa acelerar o desenvolvimento, entregando valor de forma incremental.</p>
+                <p class="mb-4" data-translate-key="overview_p2">Começamos com um <strong>Produto Mínimo Viável (MVP)</strong> focado na presença digital e consulta de menu, e evoluímos em versões subsequentes para incluir operações, engajamento e funcionalidades avançadas.</p>
+                <h3 class="text-xl font-semibold text-sky-600 mb-2" data-translate-key="overview_goals_title">Objetivos Gerais:</h3>
+                <ul class="list-disc list-inside mb-4 pl-4 space-y-1">
+                    <li data-translate-key="overview_goal_restaurants"><strong>Para Restaurantes:</strong> Aumentar a visibilidade, simplificar a gestão de operações (menus, pedidos, reservas) e fidelizar clientes.</li>
+                    <li data-translate-key="overview_goal_customers"><strong>Para Clientes:</strong> Facilitar a descoberta de restaurantes, proporcionar conveniência em pedidos e reservas, e oferecer benefícios exclusivos.</li>
+                </ul>
+                <p class="mt-6 text-sm text-slate-600" data-translate-key="overview_navigate_tip">Navegue para a seção <strong>Plano de Lançamento</strong> para ver o detalhe das funcionalidades em cada versão.</p>
+            </div>
+        </section>
+
+        <section id="planoLancamentoSection" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6" data-translate-key="plan_title">Plano de Lançamento Faseado</h2>
+            <p class="mb-6 text-center" data-translate-key="plan_subtitle">Clique em cada versão para expandir e ver as User Stories (requisitos) incluídas.</p>
+            <div id="versionsAccordion" class="space-y-2">
+
+                <div>
+                    <div class="accordion-header flex justify-between items-center">
+                        <span class="text-xl font-bold text-sky-800" data-translate-key="v1_title">Versão 1: MVP - Presença Digital e Menu QR Code</span>
+                        <span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4 italic"><strong data-translate-key="objective_label">Objetivo:</strong> <span data-translate-key="v1_objective">Colocar os restaurantes online e permitir que clientes consultem o menu digital. Foco em criar a base de informação da plataforma.</span></p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="backoffice_label">BackOffice (Portal do Restaurante)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-R001:</strong> <span data-translate-key="US-R001">Cadastrar restaurante com informações básicas.</span></li>
+                                    <li><strong class="text-sky-700">US-R002:</strong> <span data-translate-key="US-R002">Definir a categoria do restaurante.</span></li>
+                                    <li><strong class="text-sky-700">US-R005:</strong> <span data-translate-key="US-R005">Criar categorias no menu (ex: Entradas).</span></li>
+                                    <li><strong class="text-sky-700">US-R006:</strong> <span data-translate-key="US-R006">Cadastrar itens no menu (nome, preço, foto).</span></li>
+                                    <li><strong class="text-sky-700">US-R007:</strong> <span data-translate-key="US-R007">Marcar itens como disponíveis/indisponíveis.</span></li>
+                                    <li><strong class="text-sky-700">US-R008:</strong> <span data-translate-key="US-R008">Gerar um QR Code para o menu digital.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="frontoffice_label">FrontOffice (App do Cliente)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-C001:</strong> <span data-translate-key="US-C001">Visualizar restaurantes próximos.</span></li>
+                                    <li><strong class="text-sky-700">US-C002:</strong> <span data-translate-key="US-C002">Pesquisar restaurante por nome.</span></li>
+                                    <li><strong class="text-sky-700">US-C008:</strong> <span data-translate-key="US-C008">Visualizar o perfil completo do restaurante.</span></li>
+                                    <li><strong class="text-sky-700">US-C009:</strong> <span data-translate-key="US-C009">Escanear QR Code para ver o menu.</span></li>
+                                    <li><strong class="text-sky-700">US-C010:</strong> <span data-translate-key="US-C010">Navegar pelas categorias do menu.</span></li>
+                                    <li><strong class="text-sky-700">US-C011:</strong> <span data-translate-key="US-C011">Ver detalhes de um item do menu.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="accordion-header flex justify-between items-center">
+                        <span class="text-xl font-bold text-sky-800" data-translate-key="v2_title">Versão 2: Gestão de Operações Essenciais</span>
+                        <span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4 italic"><strong data-translate-key="objective_label">Objetivo:</strong> <span data-translate-key="v2_objective">Introduzir as funcionalidades transacionais de pedidos na mesa e gestão de reservas, agregando valor à operação diária.</span></p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="backoffice_label">BackOffice (Portal do Restaurante)</h4>
+                                <ul class="us-list space-y-2">
+                                     <li><strong class="text-sky-700">US-R011:</strong> <span data-translate-key="US-R011">Receber notificações de novos pedidos.</span></li>
+                                    <li><strong class="text-sky-700">US-R012:</strong> <span data-translate-key="US-R012">Visualizar detalhes do pedido.</span></li>
+                                    <li><strong class="text-sky-700">US-R013:</strong> <span data-translate-key="US-R013">Atualizar status do pedido.</span></li>
+                                    <li><strong class="text-sky-700">US-R017:</strong> <span data-translate-key="US-R017">Fechar a conta da mesa.</span></li>
+                                    <li><strong class="text-sky-700">US-R018:</strong> <span data-translate-key="US-R018">Definir disponibilidade para reservas.</span></li>
+                                    <li><strong class="text-sky-700">US-R019:</strong> <span data-translate-key="US-R019">Receber notificações de reservas.</span></li>
+                                    <li><strong class="text-sky-700">US-R020:</strong> <span data-translate-key="US-R020">Visualizar detalhes da reserva.</span></li>
+                                    <li><strong class="text-sky-700">US-R021:</strong> <span data-translate-key="US-R021">Confirmar ou rejeitar reserva.</span></li>
+                                    <li><strong class="text-sky-700">US-R022:</strong> <span data-translate-key="US-R022">Gerenciar calendário de reservas.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="frontoffice_label">FrontOffice (App do Cliente)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-C012:</strong> <span data-translate-key="US-C012">Adicionar itens ao pedido e personalizar.</span></li>
+                                    <li><strong class="text-sky-700">US-C013:</strong> <span data-translate-key="US-C013">Adicionar observações ao pedido.</span></li>
+                                    <li><strong class="text-sky-700">US-C014:</strong> <span data-translate-key="US-C014">Submeter o pedido pelo app.</span></li>
+                                    <li><strong class="text-sky-700">US-C015:</strong> <span data-translate-key="US-C015">Visualizar status do pedido.</span></li>
+                                    <li><strong class="text-sky-700">US-C017:</strong> <span data-translate-key="US-C017">Solicitar uma reserva.</span></li>
+                                    <li><strong class="text-sky-700">US-C019:</strong> <span data-translate-key="US-C019">Receber notificações sobre a reserva.</span></li>
+                                    <li><strong class="text-sky-700">US-C020:</strong> <span data-translate-key="US-C020">Visualizar histórico de reservas.</span></li>
+                                    <li><strong class="text-sky-700">US-C021:</strong> <span data-translate-key="US-C021">Cancelar ou modificar reserva.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div>
+                    <div class="accordion-header flex justify-between items-center">
+                        <span class="text-xl font-bold text-sky-800" data-translate-key="v3_title">Versão 3: Engajamento e Fidelização</span>
+                        <span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4 italic"><strong data-translate-key="objective_label">Objetivo:</strong> <span data-translate-key="v3_objective">Reter clientes e fortalecer o relacionamento, introduzindo perfis, avaliações e programas de fidelidade.</span></p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                             <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="backoffice_label">BackOffice (Portal do Restaurante)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-R025:</strong> <span data-translate-key="US-R025">Criar programas de fidelidade.</span></li>
+                                    <li><strong class="text-sky-700">US-R026:</strong> <span data-translate-key="US-R026">Definir as recompensas do programa.</span></li>
+                                    <li><strong class="text-sky-700">US-R027:</strong> <span data-translate-key="US-R027">Visualizar clientes participantes.</span></li>
+                                    <li><strong class="text-sky-700">US-R028:</strong> <span data-translate-key="US-R028">Validar resgate de recompensas.</span></li>
+                                    <li><strong class="text-sky-700">US-R029:</strong> <span data-translate-key="US-R029">Visualizar lista de clientes (CRM básico).</span></li>
+                                    <li><strong class="text-sky-700">US-R030:</strong> <span data-translate-key="US-R030">Ver o histórico de um cliente.</span></li>
+                                    <li><strong class="text-sky-700">US-R032:</strong> <span data-translate-key="US-R032">Visualizar avaliações e sugestões.</span></li>
+                                    <li><strong class="text-sky-700">US-R033:</strong> <span data-translate-key="US-R033">Responder a avaliações.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="frontoffice_label">FrontOffice (App do Cliente)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-C026:</strong> <span data-translate-key="US-C026">Criar e gerenciar perfil de cliente.</span></li>
+                                    <li><strong class="text-sky-700">US-C027:</strong> <span data-translate-key="US-C027">Avaliar um restaurante.</span></li>
+                                    <li><strong class="text-sky-700">US-C028:</strong> <span data-translate-key="US-C028">Enviar sugestões privadas.</span></li>
+                                    <li><strong class="text-sky-700">US-C030:</strong> <span data-translate-key="US-C030">Ver seu histórico de pedidos.</span></li>
+                                    <li><strong class="text-sky-700">US-C031:</strong> <span data-translate-key="US-C031">Favoritar restaurantes.</span></li>
+                                    <li><strong class="text-sky-700">US-C022:</strong> <span data-translate-key="US-C022">Aderir a um programa de fidelidade.</span></li>
+                                    <li><strong class="text-sky-700">US-C023:</strong> <span data-translate-key="US-C023">Acompanhar progresso no programa.</span></li>
+                                    <li><strong class="text-sky-700">US-C024:</strong> <span data-translate-key="US-C024">Visualizar e resgatar recompensas.</span></li>
+                                    <li><strong class="text-sky-700">US-C025:</strong> <span data-translate-key="US-C025">Ser notificado sobre ofertas do programa.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="accordion-header flex justify-between items-center">
+                        <span class="text-xl font-bold text-sky-800" data-translate-key="v4_title">Versão 4: Funcionalidades Avançadas e Otimização</span>
+                        <span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4 italic"><strong data-translate-key="objective_label">Objetivo:</strong> <span data-translate-key="v4_objective">Incluir funcionalidades complexas e ferramentas de otimização, como filtros avançados, pagamento em grupo e relatórios.</span></p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="backoffice_label">BackOffice (Portal do Restaurante)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-R003:</strong> <span data-translate-key="US-R003">Gerenciar serviços detalhados (ex: Wi-Fi).</span></li>
+                                    <li><strong class="text-sky-700">US-R004:</strong> <span data-translate-key="US-R004">Definir regras do restaurante.</span></li>
+                                    <li><strong class="text-sky-700">US-R009:</strong> <span data-translate-key="US-R009">Criar 'Combos' e 'Menus Completos'.</span></li>
+                                    <li><strong class="text-sky-700">US-R010:</strong> <span data-translate-key="US-R010">Destacar pratos.</span></li>
+                                    <li><strong class="text-sky-700">US-R016:</strong> <span data-translate-key="US-R016">Imprimir comandas de pedidos.</span></li>
+                                    <li><strong class="text-sky-700">US-R023:</strong> <span data-translate-key="US-R023">Associar menus especiais a reservas.</span></li>
+                                    <li><strong class="text-sky-700">US-R024:</strong> <span data-translate-key="US-R024">Bloquear datas para reservas.</span></li>
+                                    <li><strong class="text-sky-700">US-R031:</strong> <span data-translate-key="US-R031">Adicionar notas a perfis de clientes.</span></li>
+                                    <li><strong class="text-sky-700">US-R034:</strong> <span data-translate-key="US-R034">Visualizar relatórios de vendas.</span></li>
+                                    <li><strong class="text-sky-700">US-R035:</strong> <span data-translate-key="US-R035">Visualizar relatórios de ocupação.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-sky-600 mb-3 border-b-2 border-sky-200 pb-1" data-translate-key="frontoffice_label">FrontOffice (App do Cliente)</h4>
+                                <ul class="us-list space-y-2">
+                                    <li><strong class="text-sky-700">US-C003:</strong> <span data-translate-key="US-C003">Usar filtros de busca avançados.</span></li>
+                                    <li><strong class="text-sky-700">US-C004 a C007:</strong> <span data-translate-key="US-C004-C007">Buscar por refeição, ocasião e dieta.</span></li>
+                                    <li><strong class="text-sky-700">US-C018:</strong> <span data-translate-key="US-C018">Selecionar menu especial para reserva.</span></li>
+                                    <li><strong class="text-sky-700" data-translate-key="group_payment_module">Módulo 'Vaquinha':</strong></li>
+                                    <li class="pl-4"><strong class="text-sky-700">US-C032:</strong> <span data-translate-key="US-C032">Criar 'vaquinha' para pagamento em grupo.</span></li>
+                                    <li class="pl-4"><strong class="text-sky-700">US-C033:</strong> <span data-translate-key="US-C033">Convidar participantes para a 'vaquinha'.</span></li>
+                                    <li class="pl-4"><strong class="text-sky-700">US-C034:</strong> <span data-translate-key="US-C034">Pagar sua parte na 'vaquinha'.</span></li>
+                                    <li class="pl-4"><strong class="text-sky-700">US-C035:</strong> <span data-translate-key="US-C035">Ser informado sobre políticas de reembolso.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <section id="perfisUsuarioSection" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6" data-translate-key="profiles_title">Perfis de Usuário</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="mb-6" data-translate-key="profiles_p1">A plataforma atenderá a dois perfis principais de usuários, cada um com suas necessidades específicas, que são atendidas de forma incremental ao longo das versões planeadas.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border border-slate-300 p-4 rounded-md bg-slate-50">
+                        <h3 class="text-xl font-semibold text-sky-600 mb-2" data-translate-key="profile_admin_title">Administrador do Restaurante (Staff)</h3>
+                        <p data-translate-key="profile_admin_desc">Proprietários, gerentes ou funcionários que usam o portal BackOffice para gerenciar o perfil, menu, pedidos, reservas e clientes do estabelecimento.</p>
+                    </div>
+                    <div class="border border-slate-300 p-4 rounded-md bg-slate-50">
+                        <h3 class="text-xl font-semibold text-sky-600 mb-2" data-translate-key="profile_customer_title">Cliente Final (Consumidor)</h3>
+                        <p data-translate-key="profile_customer_desc">Indivíduos que utilizam o aplicativo FrontOffice para descobrir restaurantes, fazer pedidos, reservas, e interagir com os estabelecimentos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-4 mt-8 text-sm text-slate-600 border-t border-slate-300" data-translate-key="footer_text">
+        Plano de Lançamento Interativo &copy; 2025.
+    </footer>
+
+<script>
+// --- DICTIONARY FOR TRANSLATIONS ---
+const translations = {
+    pt: {
+        pageTitle: "Plano de Lançamento: App de Restaurantes",
+        headerTitle: "App de Restaurantes: Plano de Lançamento",
+        nav_overview: "Visão Geral",
+        nav_release_plan: "Plano de Lançamento",
+        nav_user_profiles: "Perfis de Usuário",
+        overview_title: "Visão Geral e Estratégia de Lançamento",
+        overview_p1: 'Esta página apresenta os requisitos para o "App de Restaurantes", organizados num plano de lançamento faseado. A estratégia visa acelerar o desenvolvimento, entregando valor de forma incremental.',
+        overview_p2: "Começamos com um <strong>Produto Mínimo Viável (MVP)</strong> focado na presença digital e consulta de menu, e evoluímos em versões subsequentes para incluir operações, engajamento e funcionalidades avançadas.",
+        overview_goals_title: "Objetivos Gerais:",
+        overview_goal_restaurants: "<strong>Para Restaurantes:</strong> Aumentar a visibilidade, simplificar a gestão de operações (menus, pedidos, reservas) e fidelizar clientes.",
+        overview_goal_customers: "<strong>Para Clientes:</strong> Facilitar a descoberta de restaurantes, proporcionar conveniência em pedidos e reservas, e oferecer benefícios exclusivos.",
+        overview_navigate_tip: "Navegue para a seção <strong>Plano de Lançamento</strong> para ver o detalhe das funcionalidades em cada versão.",
+        plan_title: "Plano de Lançamento Faseado",
+        plan_subtitle: "Clique em cada versão para expandir e ver as User Stories (requisitos) incluídas.",
+        objective_label: "Objetivo:",
+        backoffice_label: "BackOffice (Portal do Restaurante)",
+        frontoffice_label: "FrontOffice (App do Cliente)",
+        v1_title: "Versão 1: MVP - Presença Digital e Menu QR Code",
+        v1_objective: "Colocar os restaurantes online e permitir que clientes consultem o menu digital. Foco em criar a base de informação da plataforma.",
+        "US-R001": "Cadastrar restaurante com informações básicas.",
+        "US-R002": "Definir a categoria do restaurante.",
+        "US-R005": "Criar categorias no menu (ex: Entradas).",
+        "US-R006": "Cadastrar itens no menu (nome, preço, foto).",
+        "US-R007": "Marcar itens como disponíveis/indisponíveis.",
+        "US-R008": "Gerar um QR Code para o menu digital.",
+        "US-C001": "Visualizar restaurantes próximos.",
+        "US-C002": "Pesquisar restaurante por nome.",
+        "US-C008": "Visualizar o perfil completo do restaurante.",
+        "US-C009": "Escanear QR Code para ver o menu.",
+        "US-C010": "Navegar pelas categorias do menu.",
+        "US-C011": "Ver detalhes de um item do menu.",
+        v2_title: "Versão 2: Gestão de Operações Essenciais",
+        v2_objective: "Introduzir as funcionalidades transacionais de pedidos na mesa e gestão de reservas, agregando valor à operação diária.",
+        "US-R011": "Receber notificações de novos pedidos.",
+        "US-R012": "Visualizar detalhes do pedido.",
+        "US-R013": "Atualizar status do pedido.",
+        "US-R017": "Fechar a conta da mesa.",
+        "US-R018": "Definir disponibilidade para reservas.",
+        "US-R019": "Receber notificações de reservas.",
+        "US-R020": "Visualizar detalhes da reserva.",
+        "US-R021": "Confirmar ou rejeitar reserva.",
+        "US-R022": "Gerenciar calendário de reservas.",
+        "US-C012": "Adicionar itens ao pedido e personalizar.",
+        "US-C013": "Adicionar observações ao pedido.",
+        "US-C014": "Submeter o pedido pelo app.",
+        "US-C015": "Visualizar status do pedido.",
+        "US-C017": "Solicitar uma reserva.",
+        "US-C019": "Receber notificações sobre a reserva.",
+        "US-C020": "Visualizar histórico de reservas.",
+        "US-C021": "Cancelar ou modificar reserva.",
+        v3_title: "Versão 3: Engajamento e Fidelização",
+        v3_objective: "Reter clientes e fortalecer o relacionamento, introduzindo perfis, avaliações e programas de fidelidade.",
+        "US-R025": "Criar programas de fidelidade.",
+        "US-R026": "Definir as recompensas do programa.",
+        "US-R027": "Visualizar clientes participantes.",
+        "US-R028": "Validar resgate de recompensas.",
+        "US-R029": "Visualizar lista de clientes (CRM básico).",
+        "US-R030": "Ver o histórico de um cliente.",
+        "US-R032": "Visualizar avaliações e sugestões.",
+        "US-R033": "Responder a avaliações.",
+        "US-C026": "Criar e gerenciar perfil de cliente.",
+        "US-C027": "Avaliar um restaurante.",
+        "US-C028": "Enviar sugestões privadas.",
+        "US-C030": "Ver seu histórico de pedidos.",
+        "US-C031": "Favoritar restaurantes.",
+        "US-C022": "Aderir a um programa de fidelidade.",
+        "US-C023": "Acompanhar progresso no programa.",
+        "US-C024": "Visualizar e resgatar recompensas.",
+        "US-C025": "Ser notificado sobre ofertas do programa.",
+        v4_title: "Versão 4: Funcionalidades Avançadas e Otimização",
+        v4_objective: "Incluir funcionalidades complexas e ferramentas de otimização, como filtros avançados, pagamento em grupo e relatórios.",
+        "US-R003": "Gerenciar serviços detalhados (ex: Wi-Fi).",
+        "US-R004": "Definir regras do restaurante.",
+        "US-R009": "Criar 'Combos' e 'Menus Completos'.",
+        "US-R010": "Destacar pratos.",
+        "US-R016": "Imprimir comandas de pedidos.",
+        "US-R023": "Associar menus especiais a reservas.",
+        "US-R024": "Bloquear datas para reservas.",
+        "US-R031": "Adicionar notas a perfis de clientes.",
+        "US-R034": "Visualizar relatórios de vendas.",
+        "US-R035": "Visualizar relatórios de ocupação.",
+        "US-C003": "Usar filtros de busca avançados.",
+        "US-C004-C007": "Buscar por refeição, ocasião e dieta.",
+        "US-C018": "Selecionar menu especial para reserva.",
+        group_payment_module: "Módulo 'Vaquinha':",
+        "US-C032": "Criar 'vaquinha' para pagamento em grupo.",
+        "US-C033": "Convidar participantes para a 'vaquinha'.",
+        "US-C034": "Pagar sua parte na 'vaquinha'.",
+        "US-C035": "Ser informado sobre políticas de reembolso.",
+        profiles_title: "Perfis de Usuário",
+        profiles_p1: "A plataforma atenderá a dois perfis principais de usuários, cada um com suas necessidades específicas, que são atendidas de forma incremental ao longo das versões planeadas.",
+        profile_admin_title: "Administrador do Restaurante (Staff)",
+        profile_admin_desc: "Proprietários, gerentes ou funcionários que usam o portal BackOffice para gerenciar o perfil, menu, pedidos, reservas e clientes do estabelecimento.",
+        profile_customer_title: "Cliente Final (Consumidor)",
+        profile_customer_desc: "Indivíduos que utilizam o aplicativo FrontOffice para descobrir restaurantes, fazer pedidos, reservas, e interagir com os estabelecimentos.",
+        footer_text: "Plano de Lançamento Interativo &copy; 2025."
+    },
+    en: {
+        pageTitle: "Release Plan: Restaurant App",
+        headerTitle: "Restaurant App: Release Plan",
+        nav_overview: "Overview",
+        nav_release_plan: "Release Plan",
+        nav_user_profiles: "User Profiles",
+        overview_title: "Overview and Release Strategy",
+        overview_p1: 'This page presents the requirements for the "Restaurant App", organized into a phased release plan. The strategy aims to accelerate development by delivering value incrementally.',
+        overview_p2: "We start with a <strong>Minimum Viable Product (MVP)</strong> focused on digital presence and menu Browse, and evolve in subsequent versions to include operations, engagement, and advanced features.",
+        overview_goals_title: "General Objectives:",
+        overview_goal_restaurants: "<strong>For Restaurants:</strong> Increase visibility, simplify operations management (menus, orders, reservations), and build customer loyalty.",
+        overview_goal_customers: "<strong>For Customers:</strong> Facilitate restaurant discovery, provide convenience in ordering and booking, and offer exclusive benefits.",
+        overview_navigate_tip: "Navigate to the <strong>Release Plan</strong> section to see the details of the features in each version.",
+        plan_title: "Phased Release Plan",
+        plan_subtitle: "Click on each version to expand and see the included User Stories (requirements).",
+        objective_label: "Objective:",
+        backoffice_label: "BackOffice (Restaurant Portal)",
+        frontoffice_label: "FrontOffice (Customer App)",
+        v1_title: "Version 1: MVP - Digital Presence & QR Code Menu",
+        v1_objective: "To get restaurants online and allow customers to view the digital menu. The focus is on creating the platform's information base.",
+        "US-R001": "Register a restaurant with basic information.",
+        "US-R002": "Define the restaurant's category.",
+        "US-R005": "Create menu categories (e.g., Starters).",
+        "US-R006": "Add menu items (name, price, photo).",
+        "US-R007": "Mark items as available/unavailable.",
+        "US-R008": "Generate a QR Code for the digital menu.",
+        "US-C001": "View nearby restaurants.",
+        "US-C002": "Search for a restaurant by name.",
+        "US-C008": "View the complete restaurant profile.",
+        "US-C009": "Scan a QR Code to see the menu.",
+        "US-C010": "Navigate through menu categories.",
+        "US-C011": "View details of a menu item.",
+        v2_title: "Version 2: Core Operations Management",
+        v2_objective: "Introduce transactional features for in-table ordering and reservation management, adding value to daily operations.",
+        "US-R011": "Receive notifications for new orders.",
+        "US-R012": "View order details.",
+        "US-R013": "Update order status.",
+        "US-R017": "Close the table's bill.",
+        "US-R018": "Set availability for reservations.",
+        "US-R019": "Receive reservation notifications.",
+        "US-R020": "View reservation details.",
+        "US-R021": "Confirm or reject a reservation.",
+        "US-R022": "Manage a reservation calendar.",
+        "US-C012": "Add items to the order and customize them.",
+        "US-C013": "Add notes to the order.",
+        "US-C014": "Submit the order through the app.",
+        "US-C015": "View the order status.",
+        "US-C017": "Request a reservation.",
+        "US-C019": "Receive notifications about the reservation.",
+        "US-C020": "View reservation history.",
+        "US-C021": "Cancel or modify a reservation.",
+        v3_title: "Version 3: Engagement and Loyalty",
+        v3_objective: "Retain customers and strengthen relationships by introducing profiles, reviews, and loyalty programs.",
+        "US-R025": "Create loyalty programs.",
+        "US-R026": "Define the program's rewards.",
+        "US-R027": "View participating customers.",
+        "US-R028": "Validate reward redemptions.",
+        "US-R029": "View the customer list (basic CRM).",
+        "US-R030": "See a customer's history.",
+        "US-R032": "View reviews and suggestions.",
+        "US-R033": "Respond to reviews.",
+        "US-C026": "Create and manage a customer profile.",
+        "US-C027": "Review a restaurant.",
+        "US-C028": "Send private suggestions.",
+        "US-C030": "See own order history.",
+        "US-C031": "Favorite restaurants.",
+        "US-C022": "Join a loyalty program.",
+        "US-C023": "Track progress in the program.",
+        "US-C024": "View and redeem rewards.",
+        "US-C025": "Get notified about program offers.",
+        v4_title: "Version 4: Advanced Features and Optimization",
+        v4_objective: "Include complex features and optimization tools, such as advanced filters, group payments, and reports.",
+        "US-R003": "Manage detailed services (e.g., Wi-Fi).",
+        "US-R004": "Define restaurant rules.",
+        "US-R009": "Create 'Combos' and 'Set Menus'.",
+        "US-R010": "Highlight dishes.",
+        "US-R016": "Print order tickets.",
+        "US-R023": "Associate special menus with reservations.",
+        "US-R024": "Block specific dates for reservations.",
+        "US-R031": "Add notes to customer profiles.",
+        "US-R034": "View sales reports.",
+        "US-R035": "View occupancy reports.",
+        "US-C003": "Use advanced search filters.",
+        "US-C004-C007": "Search by meal, occasion, and diet.",
+        "US-C018": "Select a special menu for a reservation.",
+        group_payment_module: "Group Payment Module:",
+        "US-C032": "Create a group payment for an event.",
+        "US-C033": "Invite participants to the group payment.",
+        "US-C034": "Pay one's share in the group payment.",
+        "US-C035": "Be informed about refund policies.",
+        profiles_title: "User Profiles",
+        profiles_p1: "The platform will serve two main user profiles, each with specific needs that are met incrementally throughout the planned versions.",
+        profile_admin_title: "Restaurant Administrator (Staff)",
+        profile_admin_desc: "Owners, managers, or staff who use the BackOffice portal to manage the establishment's profile, menu, orders, reservations, and customers.",
+        profile_customer_title: "End Customer (Consumer)",
+        profile_customer_desc: "Individuals who use the FrontOffice application to discover restaurants, place orders, make reservations, and interact with establishments.",
+        footer_text: "Interactive Release Plan &copy; 2025."
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    const mainNav = document.getElementById('mainNav');
+    const contentSections = document.querySelectorAll('.content-section');
+    const navButtons = mainNav.querySelectorAll('.nav-button');
+    const langSelector = document.getElementById('lang-selector');
+    const langButtons = langSelector.querySelectorAll('.lang-switcher');
+
+    // --- TRANSLATION FUNCTION ---
+    const translatePage = (lang) => {
+        document.querySelectorAll('[data-translate-key]').forEach(element => {
+            const key = element.getAttribute('data-translate-key');
+            if (translations[lang] && translations[lang][key]) {
+                // Use innerHTML to allow for tags like <strong>
+                element.innerHTML = translations[lang][key];
+            }
+        });
+        // Also translate the page title
+        document.title = translations[lang].pageTitle;
+        // Set HTML lang attribute
+        document.documentElement.lang = lang;
+    };
+
+    // --- LANGUAGE SWITCHER LOGIC ---
+    langSelector.addEventListener('click', (e) => {
+        if (e.target.matches('.lang-switcher')) {
+            const selectedLang = e.target.getAttribute('data-lang');
+            localStorage.setItem('preferredLang', selectedLang);
+            translatePage(selectedLang);
+            
+            langButtons.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+        }
+    });
+
+    // --- NAVIGATION LOGIC ---
+    function showSection(sectionId) {
+        contentSections.forEach(section => section.classList.remove('active'));
+        navButtons.forEach(button => button.classList.remove('active'));
+        const activeSection = document.getElementById(sectionId);
+        if (activeSection) activeSection.classList.add('active');
+        const activeButton = mainNav.querySelector(`[data-section="${sectionId}"]`);
+        if (activeButton) activeButton.classList.add('active');
+    }
+
+    mainNav.addEventListener('click', function (e) {
+        if (e.target.matches('.nav-button')) {
+            showSection(e.target.dataset.section);
+        }
+    });
+
+    // --- ACCORDION LOGIC ---
+    const versionsAccordion = document.getElementById('versionsAccordion');
+    if (versionsAccordion) {
+        const headers = versionsAccordion.querySelectorAll('.accordion-header');
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const arrow = header.querySelector('.arrow');
+                const isCurrentlyOpen = content.style.display === 'block';
+
+                // Close all accordions first
+                headers.forEach(otherHeader => {
+                    otherHeader.nextElementSibling.style.display = 'none';
+                    otherHeader.querySelector('.arrow').style.transform = 'rotate(0deg)';
+                });
+
+                // If it was closed, open it now
+                if (!isCurrentlyOpen) {
+                    content.style.display = 'block';
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    }
+
+    // --- INITIAL PAGE LOAD ---
+    const savedLang = localStorage.getItem('preferredLang') || 'pt';
+    translatePage(savedLang);
+    langButtons.forEach(btn => {
+        if (btn.getAttribute('data-lang') === savedLang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    showSection('visaoGeralSection');
+});
+</script>
+</body>
+</html>
