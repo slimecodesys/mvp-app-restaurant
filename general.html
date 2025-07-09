@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA: Restaurant App Requirements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap;
+        }
+        .nav-button.active, .nav-button:hover {
+            background-color: #0369a1; /* sky-700 */
+            color: white;
+        }
+        .lang-button {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid white;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .lang-button.active, .lang-button:hover {
+            background-color: white;
+            color: #0369a1; /* sky-700 */
+        }
+        .accordion-header {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            background-color: #e2e8f0; /* slate-200 */
+            border: 1px solid #cbd5e1; /* slate-300 */
+            border-radius: 0.375rem;
+            margin-bottom: 0.25rem;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #cbd5e1; /* slate-300 */
+        }
+        .accordion-content {
+            display: none;
+            padding: 1rem;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-top: none;
+            border-radius: 0 0 0.375rem 0.375rem;
+        }
+        .us-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #f1f5f9; /* slate-100 */
+        }
+        .us-item:last-child {
+            border-bottom: none;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh; /* Default height */
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800">
+
+    <header class="bg-sky-800 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                <h1 data-lang-key="mainTitle" class="text-2xl font-bold mb-2 sm:mb-0 text-center sm:text-left">Restaurant App: Interactive Requirements</h1>
+                <div id="langSwitcher" class="flex items-center gap-2">
+                    <button data-lang="en" class="lang-button">EN</button>
+                    <button data-lang="pt" class="lang-button">PT</button>
+                </div>
+            </div>
+            <nav id="mainNav" class="flex flex-wrap justify-center gap-2">
+                <button data-section="visaoGeralSection" class="nav-button active" data-lang-key="navOverview">Overview</button>
+                <button data-section="perfisUsuarioSection" class="nav-button" data-lang-key="navProfiles">Profiles</button>
+                <button data-section="funcBackOfficeSection" class="nav-button" data-lang-key="navBackOffice">BackOffice</button>
+                <button data-section="funcFrontOfficeSection" class="nav-button" data-lang-key="navFrontOffice">FrontOffice</button>
+                <button data-section="categoriasMenusSection" class="nav-button" data-lang-key="navCategories">Categories</button>
+                <button data-section="fluxosUsuarioSection" class="nav-button" data-lang-key="navFlows">Flows</button>
+                <button data-section="analiseRequisitosSection" class="nav-button" data-lang-key="navAnalysis">Analysis</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <section id="visaoGeralSection" class="content-section active">
+            <h2 data-lang-key="overviewTitle" class="text-3xl font-bold text-sky-700 mb-6">Overview and Objectives</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="overviewP1" class="mb-4"></p>
+                <h3 data-lang-key="overviewH3_1" class="text-xl font-semibold text-sky-600 mb-2"></h3>
+                <ul id="overviewList1" class="list-disc list-inside mb-4 pl-4 space-y-1"></ul>
+                <h3 data-lang-key="overviewH3_2" class="text-xl font-semibold text-sky-600 mb-2"></h3>
+                <ul id="overviewList2" class="list-disc list-inside pl-4 space-y-1"></ul>
+                <p data-lang-key="overviewP2" class="mt-6 text-sm text-slate-600"></p>
+            </div>
+        </section>
+
+        <section id="perfisUsuarioSection" class="content-section">
+            <h2 data-lang-key="profilesTitle" class="text-3xl font-bold text-sky-700 mb-6">User Profiles</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="profilesP1" class="mb-6"></p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border border-slate-300 p-4 rounded-md bg-slate-50">
+                        <h3 data-lang-key="profile1Title" class="text-xl font-semibold text-sky-600 mb-2"></h3>
+                        <p data-lang-key="profile1DescTitle" class="font-semibold mb-1"></p>
+                        <p data-lang-key="profile1DescText" class="mb-3"></p>
+                        <p data-lang-key="profile1NeedsTitle" class="font-semibold mb-1"></p>
+                        <ul id="profile1NeedsList" class="list-disc list-inside pl-4 space-y-1"></ul>
+                    </div>
+                    <div class="border border-slate-300 p-4 rounded-md bg-slate-50">
+                        <h3 data-lang-key="profile2Title" class="text-xl font-semibold text-sky-600 mb-2"></h3>
+                        <p data-lang-key="profile2DescTitle" class="font-semibold mb-1"></p>
+                        <p data-lang-key="profile2DescText" class="mb-3"></p>
+                        <p data-lang-key="profile2NeedsTitle" class="font-semibold mb-1"></p>
+                        <ul id="profile2NeedsList" class="list-disc list-inside pl-4 space-y-1"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="funcBackOfficeSection" class="content-section">
+            <h2 data-lang-key="backofficeTitle" class="text-3xl font-bold text-sky-700 mb-6">BackOffice Features (Restaurant Portal)</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="backofficeP1" class="mb-4"></p>
+                <input type="text" id="searchBackOffice" class="w-full p-2 border border-slate-300 rounded-md mb-4" data-lang-placeholder-key="backofficeSearchPlaceholder">
+                <div id="backOfficeAccordion" class="space-y-2"></div>
+            </div>
+        </section>
+
+        <section id="funcFrontOfficeSection" class="content-section">
+            <h2 data-lang-key="frontofficeTitle" class="text-3xl font-bold text-sky-700 mb-6">FrontOffice Features (Customer App)</h2>
+              <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="frontofficeP1" class="mb-4"></p>
+                <input type="text" id="searchFrontOffice" class="w-full p-2 border border-slate-300 rounded-md mb-4" data-lang-placeholder-key="frontofficeSearchPlaceholder">
+                <div id="frontOfficeAccordion" class="space-y-2"></div>
+            </div>
+        </section>
+
+        <section id="categoriasMenusSection" class="content-section">
+            <h2 data-lang-key="categoriesTitle" class="text-3xl font-bold text-sky-700 mb-6">Restaurant Categories and Special Menus</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                 <p data-lang-key="categoriesP1" class="mb-6"></p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 data-lang-key="mainCategoriesTitle" class="text-xl font-semibold text-sky-600 mb-3"></h3>
+                        <div id="restaurantCategories" class="space-y-4"></div>
+                    </div>
+                    <div>
+                        <h3 data-lang-key="specialMenusTitle" class="text-xl font-semibold text-sky-600 mb-3"></h3>
+                        <ul id="specialMenus" class="list-disc list-inside pl-4 space-y-1 bg-slate-50 p-4 rounded-md"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fluxosUsuarioSection" class="content-section">
+            <h2 data-lang-key="flowsTitle" class="text-3xl font-bold text-sky-700 mb-6">Main User Flows</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="flowsP1" class="mb-6"></p>
+                <div id="userFlowsAccordion" class="space-y-2"></div>
+            </div>
+        </section>
+
+        <section id="analiseRequisitosSection" class="content-section">
+            <h2 data-lang-key="analysisTitle" class="text-3xl font-bold text-sky-700 mb-6">Quantitative Requirements Analysis</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p data-lang-key="analysisP1" class="mb-6"></p>
+                <div class="chart-container max-w-4xl mx-auto h-[500px] md:h-[600px]">
+                    <canvas id="usCountChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-4 mt-8 text-sm text-slate-600 border-t border-slate-300">
+        <span data-lang-key="footerText">Interactive Requirements SPA &copy; 2024-2025. Generated for "Restaurant App" project analysis.</span>
+    </footer>
+
+<script>
+    // --- I18N Data ---
+    const translations = {
+        // --- Static UI Text ---
+        mainTitle: { en: "Restaurant App: Interactive Requirements", pt: "App de Restaurante: Requisitos Interativos" },
+        navOverview: { en: "Overview", pt: "Visão Geral" },
+        navProfiles: { en: "Profiles", pt: "Perfis" },
+        navBackOffice: { en: "BackOffice", pt: "BackOffice" },
+        navFrontOffice: { en: "FrontOffice", pt: "FrontOffice" },
+        navCategories: { en: "Categories", pt: "Categorias" },
+        navFlows: { en: "Flows", pt: "Fluxos" },
+        navAnalysis: { en: "Analysis", pt: "Análise" },
+        overviewTitle: { en: "Overview and Objectives", pt: "Visão Geral e Objetivos" },
+        overviewP1: {
+            en: 'This interactive SPA presents the detailed requirements for the development of the "Restaurant App". The platform aims to be the complete digital solution that connects customers to restaurants, facilitating discovery, ordering, reservation, loyalty, and end-to-end gastronomic experience management.',
+            pt: 'Esta SPA interativa apresenta os requisitos detalhados para o desenvolvimento do "Restaurant App". A plataforma visa ser a solução digital completa que conecta clientes a restaurantes, facilitando a descoberta, pedidos, reservas, fidelização e a gestão ponta-a-ponta da experiência gastronómica.'
+        },
+        overviewH3_1: { en: "Objectives for Restaurants (BackOffice):", pt: "Objetivos para Restaurantes (BackOffice):" },
+        overviewList1: {
+            en: ["Increase visibility and attract new customers.", "Simplify menu, order, and reservation management.", "Optimize internal operations.", "Foster customer relationships and loyalty.", "Offer a modern and user-friendly digital tool."],
+            pt: ["Aumentar a visibilidade e atrair novos clientes.", "Simplificar a gestão de menus, pedidos e reservas.", "Otimizar as operações internas.", "Fomentar o relacionamento e a fidelização de clientes.", "Oferecer uma ferramenta digital moderna e fácil de usar."]
+        },
+        overviewH3_2: { en: "Objectives for End Customers (FrontOffice):", pt: "Objetivos para Clientes Finais (FrontOffice):" },
+        overviewList2: {
+            en: ["Facilitate restaurant discovery by various criteria.", "Provide a convenient ordering and reservation experience.", "Offer access to loyalty programs and exclusive offers.", "Enable social interaction (reviews, suggestions, invitations).", "Simplify payment and group event organization."],
+            pt: ["Facilitar a descoberta de restaurantes por diversos critérios.", "Proporcionar uma experiência de pedido e reserva conveniente.", "Oferecer acesso a programas de fidelidade e ofertas exclusivas.", "Permitir interação social (avaliações, sugestões, convites).", "Simplificar o pagamento e a organização de eventos de grupo."]
+        },
+        overviewP2: {
+            en: "Navigate through the sections using the menu above to explore all aspects of the project.",
+            pt: "Navegue pelas seções usando o menu acima para explorar todos os aspetos do projeto."
+        },
+        profilesTitle: { en: "User Profiles", pt: "Perfis de Utilizador" },
+        profilesP1: {
+            en: "The platform will serve two main user profiles, each with their specific needs. Click on a profile for more details (future functionality) or read the descriptions below.",
+            pt: "A plataforma atenderá a dois perfis de utilizador principais, cada um com as suas necessidades específicas. Clique num perfil para mais detalhes (funcionalidade futura) ou leia as descrições abaixo."
+        },
+        profile1Title: { en: "2.1. Restaurant Administrator (Staff)", pt: "2.1. Administrador do Restaurante (Staff)" },
+        profile1DescTitle: { en: "Description:", pt: "Descrição:" },
+        profile1DescText: {
+            en: "Owners, managers, or designated restaurant staff to manage the establishment's profile, menu, orders, reservations, and other settings on the platform.",
+            pt: "Proprietários, gerentes ou funcionários designados do restaurante para gerir o perfil do estabelecimento, menu, pedidos, reservas e outras configurações na plataforma."
+        },
+        profile1NeedsTitle: { en: "Needs:", pt: "Necessidades:" },
+        profile1NeedsList: {
+            en: ["Intuitive tools to update information in real-time.", "Efficiently manage daily operations.", "Analyze customer data.", "Interact with customers."],
+            pt: ["Ferramentas intuitivas para atualizar informações em tempo real.", "Gerir eficientemente as operações diárias.", "Analisar dados de clientes.", "Interagir com os clientes."]
+        },
+        profile2Title: { en: "2.2. End Customer (Consumer)", pt: "2.2. Cliente Final (Consumidor)" },
+        profile2DescTitle: { en: "Description:", pt: "Descrição:" },
+        profile2DescText: {
+            en: "Individuals who use the app to discover restaurants, place orders, make reservations, participate in loyalty programs, and interact with establishments.",
+            pt: "Indivíduos que utilizam a app para descobrir restaurantes, fazer pedidos, reservas, participar em programas de fidelidade e interagir com os estabelecimentos."
+        },
+        profile2NeedsTitle: { en: "Needs:", pt: "Necessidades:" },
+        profile2NeedsList: {
+            en: ["User-friendly interface and efficient search.", "Clear and accurate information about restaurants.", "Simple and fast ordering/reservation process.", "Benefits through loyalty programs.", "Personalized experience."],
+            pt: ["Interface amigável e pesquisa eficiente.", "Informações claras e precisas sobre os restaurantes.", "Processo de pedido/reserva simples e rápido.", "Benefícios através de programas de fidelidade.", "Experiência personalizada."]
+        },
+        backofficeTitle: { en: "BackOffice Features (Restaurant Portal)", pt: "Funcionalidades do BackOffice (Portal do Restaurante)" },
+        backofficeP1: {
+            en: "This section details the functionalities available to restaurant administrators. Click on each module to expand and view the associated User Stories (US). Use the search box to filter User Stories by keyword or ID.",
+            pt: "Esta seção detalha as funcionalidades disponíveis para os administradores de restaurantes. Clique em cada módulo para expandir e visualizar as User Stories (US) associadas. Use a caixa de pesquisa para filtrar as User Stories por palavra-chave ou ID."
+        },
+        backofficeSearchPlaceholder: { en: "Search BackOffice User Stories (e.g., US-R001, menu, reservation)...", pt: "Pesquisar User Stories do BackOffice (ex: US-R001, menu, reserva)..." },
+        frontofficeTitle: { en: "FrontOffice Features (Customer App)", pt: "Funcionalidades do FrontOffice (App do Cliente)" },
+        frontofficeP1: {
+            en: "This section details the functionalities available to end customers. Click on each module to expand and view the associated User Stories (US). Use the search box to filter User Stories by keyword or ID.",
+            pt: "Esta seção detalha as funcionalidades disponíveis para os clientes finais. Clique em cada módulo para expandir e visualizar as User Stories (US) associadas. Use a caixa de pesquisa para filtrar as User Stories por palavra-chave ou ID."
+        },
+        frontofficeSearchPlaceholder: { en: "Search FrontOffice User Stories (e.g., US-C001, search, profile)...", pt: "Pesquisar User Stories do FrontOffice (ex: US-C001, procurar, perfil)..." },
+        categoriesTitle: { en: "Restaurant Categories and Special Menus", pt: "Categorias de Restaurantes e Menus Especiais" },
+        categoriesP1: {
+            en: "This section presents suggestions for classifying restaurants and types of special menus that can be offered. These lists serve as a starting point and can be expanded.",
+            pt: "Esta seção apresenta sugestões para a classificação de restaurantes e tipos de menus especiais que podem ser oferecidos. Estas listas servem como ponto de partida e podem ser expandidas."
+        },
+        mainCategoriesTitle: { en: "4.1. Main Restaurant Categories (Examples)", pt: "4.1. Categorias Principais de Restaurantes (Exemplos)" },
+        specialMenusTitle: { en: "4.2. Types of Special Menus", pt: "4.2. Tipos de Menus Especiais" },
+        flowsTitle: { en: "Main User Flows", pt: "Fluxos Principais do Utilizador" },
+        flowsP1: {
+            en: "This section describes examples of user interaction flows with the platform, illustrating how functionalities connect to meet user needs. Click on each flow to see the detailed steps.",
+            pt: "Esta seção descreve exemplos de fluxos de interação do utilizador com a plataforma, ilustrando como as funcionalidades se conectam para atender às suas necessidades. Clique em cada fluxo para ver os passos detalhados."
+        },
+        analysisTitle: { en: "Quantitative Requirements Analysis", pt: "Análise Quantitativa de Requisitos" },
+        analysisP1: {
+            en: "To provide an overview of feature distribution, the chart below shows the count of User Stories (US) per module, for both BackOffice and FrontOffice. This can help identify areas with higher requirement density.",
+            pt: "Para fornecer uma visão geral da distribuição de funcionalidades, o gráfico abaixo mostra a contagem de User Stories (US) por módulo, tanto para o BackOffice quanto para o FrontOffice. Isso pode ajudar a identificar áreas com maior densidade de requisitos."
+        },
+        chartLabel: { en: 'Number of User Stories', pt: 'Número de User Stories' },
+        chartXLabel: { en: 'User Story Count', pt: 'Contagem de User Stories' },
+        footerText: {
+            en: 'Interactive Requirements SPA &copy; 2024-2025. Generated for "Restaurant App" project analysis.',
+            pt: 'SPA de Requisitos Interativos &copy; 2024-2025. Gerado para análise do projeto "Restaurant App".'
+        },
+
+        // --- Dynamic Data ---
+        backOfficeData: {
+            en: {
+                "Restaurant Profile Management": [
+                    { id: "US-R001", text: "As an administrator, I want to register my restaurant by providing basic information (name, address, contact, opening hours, photos, description)." },
+                    { id: "US-R002", text: "As an administrator, I want to define and update my restaurant's category(ies) (e.g., Italian, Sushi, Steakhouse)." },
+                    { id: "US-R003", text: "As an administrator, I want to add and manage offered services (e.g., Wi-Fi, Disabled access, Parking, Live music, Delivery, Takeaway)." },
+                    { id: "US-R004", text: "As an administrator, I want to define restaurant rules (e.g., reservation cancellation policy, dress code)." }
+                ],
+                "Digital Menu Management (QR Code)": [
+                    { id: "US-R005", text: "As an administrator, I want to create and manage menu categories (e.g., Appetizers, Main Courses, Desserts, Drinks)." },
+                    { id: "US-R006", text: "As an administrator, I want to register menu items with name, description, price, photo, ingredients, allergen information, and customization options (e.g., size, meat doneness)." },
+                    { id: "US-R007", text: "As an administrator, I want to mark items as 'unavailable' or 'available' in real-time." },
+                    { id: "US-R008", text: "As an administrator, I want to generate a QR Code that directs customers to the updated digital menu." },
+                    { id: "US-R009", text: "As an administrator, I want to create 'Complete Menus' or 'Combos' with a fixed price." },
+                    { id: "US-R010", text: "As an administrator, I want to highlight dishes (e.g., 'Chef's Suggestion', 'Most Popular')." }
+                ],
+                "Order Management (In-Restaurant)": [
+                    { id: "US-R011", text: "As an administrator, I want to receive notifications of new orders placed by customers (via app, after scanning the QR Code at the table)." },
+                    { id: "US-R012", text: "As an administrator, I want to view the details of each order (table, items, notes, status)." },
+                    { id: "US-R013", text: "As an administrator, I want to update an order's status (e.g., Received, Preparing, Ready to Serve, Delivered, Paid)." },
+                    { id: "US-R014", text: "As an administrator, I want to add extra items or modify an existing order (with customer consent or by request)." },
+                    { id: "US-R015", text: "As an administrator, I want to manage orders for different service types (e.g., dine-in, takeaway)." },
+                    { id: "US-R016", text: "As an administrator, I want to print order tickets for the kitchen/bar." },
+                    { id: "US-R017", text: "As an administrator, I want to close a table's bill and record payment." }
+                ],
+                "Reservation Management": [
+                    { id: "US-R018", text: "As an administrator, I want to define table availability for reservations (days, times, capacity)." },
+                    { id: "US-R019", text: "As an administrator, I want to receive notifications of new reservation requests." },
+                    { id: "US-R020", text: "As an administrator, I want to view the details of each reservation (name, contact, date, time, number of people, notes)." },
+                    { id: "US-R021", text: "As an administrator, I want to confirm, reject, or suggest changes to a reservation." },
+                    { id: "US-R022", text: "As an administrator, I want to manage a reservation calendar." },
+                    { id: "US-R023", text: "As an administrator, I want to create and associate 'Special Menus' with reservations for occasions (e.g., Valentine's Day Menu, Birthday Menu)." },
+                    { id: "US-R024", text: "As an administrator, I want to block specific dates/times for reservations." }
+                ],
+                "Loyalty Program": [
+                    { id: "US-R025", text: "As an administrator, I want to create and configure loyalty programs (e.g., for every X visits/spending, the customer earns Y)." },
+                    { id: "US-R026", text: "As an administrator, I want to define loyalty program rewards (e.g., free dish, discount, drink)." },
+                    { id: "US-R027", text: "As an administrator, I want to view customers participating in the program and their progress." },
+                    { id: "US-R028", text: "As an administrator, I want to validate reward redemption." }
+                ],
+                "Customer Management (Basic CRM)": [
+                    { id: "US-R029", text: "As an administrator, I want to view a list of customers who have interacted with the restaurant (orders, reservations, loyalty)." },
+                    { id: "US-R030", text: "As an administrator, I want to view a customer's history (previous orders, frequency, noted preferences)." },
+                    { id: "US-R031", text: "As an administrator, I want to add notes or preferences to customer profiles (e.g., allergies, preferred table)." },
+                    { id: "US-R032", text: "As an administrator, I want to view reviews and suggestions submitted by customers." },
+                    { id: "US-R033", text: "As an administrator, I want to respond to reviews or suggestions (if applicable)." }
+                ],
+                "Reports and Analytics (Basic)": [
+                    { id: "US-R034", text: "As an administrator, I want to view basic sales reports (e.g., best-selling dishes, peak hours)." },
+                    { id: "US-R035", text: "As an administrator, I want to view reservation and occupancy reports." }
+                ]
+            },
+            pt: {
+                "Gestão do Perfil do Restaurante": [
+                    { id: "US-R001", text: "Como administrador, quero poder registar o meu restaurante fornecendo informações básicas (nome, morada, contacto, horário, fotos, descrição)." },
+                    { id: "US-R002", text: "Como administrador, quero poder definir e atualizar a(s) categoria(s) do meu restaurante (ex: Italiano, Sushi, Steakhouse)." },
+                    { id: "US-R003", text: "Como administrador, quero poder adicionar e gerir serviços oferecidos (ex: Wi-Fi, Acesso para deficientes, Estacionamento, Música ao vivo, Delivery, Takeaway)." },
+                    { id: "US-R004", text: "Como administrador, quero poder definir regras do restaurante (ex: política de cancelamento de reservas, código de vestimenta)." }
+                ],
+                "Gestão do Menu Digital (QR Code)": [
+                    { id: "US-R005", text: "Como administrador, quero poder criar e gerir categorias do menu (ex: Entradas, Pratos Principais, Sobremesas, Bebidas)." },
+                    { id: "US-R006", text: "Como administrador, quero poder registar itens do menu com nome, descrição, preço, foto, ingredientes, informações de alergénios e opções de personalização (ex: tamanho, ponto da carne)." },
+                    { id: "US-R007", text: "Como administrador, quero poder marcar itens como 'indisponíveis' ou 'disponíveis' em tempo real." },
+                    { id: "US-R008", text: "Como administrador, quero poder gerar um QR Code que direcione os clientes para o menu digital atualizado." },
+                    { id: "US-R009", text: "Como administrador, quero poder criar 'Menus Completos' ou 'Combos' com preço fixo." },
+                    { id: "US-R010", text: "Como administrador, quero poder destacar pratos (ex: 'Sugestão do Chef', 'Mais Popular')." }
+                ],
+                "Gestão de Pedidos (No Restaurante)": [
+                    { id: "US-R011", text: "Como administrador, quero receber notificações de novos pedidos feitos pelos clientes (via app, após ler o QR Code na mesa)." },
+                    { id: "US-R012", text: "Como administrador, quero visualizar os detalhes de cada pedido (mesa, itens, observações, estado)." },
+                    { id: "US-R013", text: "Como administrador, quero poder atualizar o estado de um pedido (ex: Recebido, Em preparação, Pronto a servir, Entregue, Pago)." },
+                    { id: "US-R014", text: "Como administrador, quero poder adicionar itens extra ou modificar um pedido existente (com consentimento do cliente ou a seu pedido)." },
+                    { id: "US-R015", text: "Como administrador, quero poder gerir pedidos para diferentes tipos de serviço (ex: consumo no local, takeaway)." },
+                    { id: "US-R016", text: "Como administrador, quero poder imprimir os talões de pedido para a cozinha/bar." },
+                    { id: "US-R017", text: "Como administrador, quero poder fechar a conta de uma mesa e registar o pagamento." }
+                ],
+                "Gestão de Reservas": [
+                    { id: "US-R018", text: "Como administrador, quero poder definir a disponibilidade de mesas para reservas (dias, horários, capacidade)." },
+                    { id: "US-R019", text: "Como administrador, quero receber notificações de novos pedidos de reserva." },
+                    { id: "US-R020", text: "Como administrador, quero poder visualizar os detalhes de cada reserva (nome, contacto, data, hora, nº de pessoas, observações)." },
+                    { id: "US-R021", text: "Como administrador, quero poder confirmar, rejeitar ou sugerir alterações a uma reserva." },
+                    { id: "US-R022", text: "Como administrador, quero poder gerir um calendário de reservas." },
+                    { id: "US-R023", text: "Como administrador, quero poder criar e associar 'Menus Especiais' a reservas para ocasiões (ex: Menu Dia dos Namorados, Menu de Aniversário)." },
+                    { id: "US-R024", text: "Como administrador, quero poder bloquear datas/horários específicos para reservas." }
+                ],
+                "Programa de Fidelidade": [
+                    { id: "US-R025", text: "Como administrador, quero poder criar e configurar programas de fidelidade (ex: a cada X visitas/gastos, o cliente ganha Y)." },
+                    { id: "US-R026", text: "Como administrador, quero poder definir as recompensas do programa de fidelidade (ex: prato grátis, desconto, bebida)." },
+                    { id: "US-R027", text: "Como administrador, quero poder visualizar os clientes que participam no programa e o seu progresso." },
+                    { id: "US-R028", text: "Como administrador, quero poder validar o resgate de uma recompensa." }
+                ],
+                "Gestão de Clientes (CRM Básico)": [
+                    { id: "US-R029", text: "Como administrador, quero poder ver uma lista de clientes que interagiram com o restaurante (pedidos, reservas, fidelidade)." },
+                    { id: "US-R030", text: "Como administrador, quero poder ver o histórico de um cliente (pedidos anteriores, frequência, preferências anotadas)." },
+                    { id: "US-R031", text: "Como administrador, quero poder adicionar notas ou preferências aos perfis dos clientes (ex: alergias, mesa preferida)." },
+                    { id: "US-R032", text: "Como administrador, quero poder visualizar as avaliações e sugestões enviadas pelos clientes." },
+                    { id: "US-R033", text: "Como administrador, quero poder responder às avaliações ou sugestões (se aplicável)." }
+                ],
+                "Relatórios e Análises (Básico)": [
+                    { id: "US-R034", text: "Como administrador, quero poder ver relatórios básicos de vendas (ex: pratos mais vendidos, horas de pico)." },
+                    { id: "US-R035", text: "Como administrador, quero poder ver relatórios de reservas e ocupação." }
+                ]
+            }
+        },
+        frontOfficeData: {
+            en: {
+                "Restaurant Discovery and Search": [
+                    { id: "US-C001", text: "As a customer, I want to view restaurants near my current location." },
+                    { id: "US-C002", text: "As a customer, I want to search for restaurants by name, cuisine type, or specific dish." },
+                    { id: "US-C003", text: "As a customer, I want to filter restaurants by category, subcategory, price range, rating, opening hours, and services offered." },
+                    { id: "US-C004", text: "As a customer, I want to find restaurants for specific meals (breakfast, lunch, dinner, snack)." },
+                    { id: "US-C005", text: "As a customer, I want to find restaurants with special menus for occasions (romantic dinner, birthday, business meeting, celebrations)." },
+                    { id: "US-C006", text: "As a customer, I want to find restaurants aligned with my diet or dietary restrictions (e.g., vegan, vegetarian, gluten-free, lactose-free)." },
+                    { id: "US-C007", text: "As a customer, I want to view restaurants sorted by popularity or rating." },
+                    { id: "US-C008", text: "As a customer, I want to view a restaurant's full profile (photos, description, menu, map location, hours, reviews, rules)." }
+                ],
+                "Menu Viewing and Ordering (In-Restaurant via QR Code)": [
+                    { id: "US-C009", text: "As a customer, I want to scan a QR Code at the table to view the restaurant's digital menu." },
+                    { id: "US-C010", text: "As a customer, I want to navigate through menu categories and items." },
+                    { id: "US-C011", text: "As a customer, I want to see item details (description, price, photo, ingredients, allergens)." },
+                    { id: "US-C012", text: "As a customer, I want to add items to my order, specifying quantities and customization options." },
+                    { id: "US-C013", text: "As a customer, I want to add notes to my order or specific items." },
+                    { id: "US-C014", text: "As a customer, I want to submit my order to the kitchen directly from the app." },
+                    { id: "US-C015", text: "As a customer, I want to view the status of my order in real-time." },
+                    { id: "US-C016", text: "As a customer, I want to call the waiter or request the bill through the app (optional)." }
+                ],
+                "Reservations": [
+                    { id: "US-C017", text: "As a customer, I want to request a reservation at a restaurant, specifying date, time, number of people, and notes." },
+                    { id: "US-C018", text: "As a customer, I want to select a special menu for my reservation, if available for the occasion." },
+                    { id: "US-C019", text: "As a customer, I want to receive notifications about my reservation status (confirmed, pending, rejected)." },
+                    { id: "US-C020", text: "As a customer, I want to view my future and past reservations." },
+                    { id: "US-C021", text: "As a customer, I want to cancel or modify a reservation (according to restaurant policy)." }
+                ],
+                "Loyalty Program": [
+                    { id: "US-C022", text: "As a customer, I want to join a restaurant's loyalty program." },
+                    { id: "US-C023", text: "As a customer, I want to track my progress in the restaurant's loyalty program (points, visits)." },
+                    { id: "US-C024", text: "As a customer, I want to view available rewards and how to redeem them." },
+                    { id: "US-C025", text: "As a customer, I want to be notified about exclusive loyalty program offers and promotions." }
+                ],
+                "Customer Profile and Interactions": [
+                    { id: "US-C026", text: "As a customer, I want to create and manage my profile (name, photo, contact information, general dietary preferences)." },
+                    { id: "US-C027", text: "As a customer, I want to rate a restaurant and its services after a visit/order (score, comment)." },
+                    { id: "US-C028", text: "As a customer, I want to send private suggestions to a restaurant." },
+                    { id: "US-C029", text: "As a customer, I want to invite friends to install the app via a referral link." },
+                    { id: "US-C030", text: "As a customer, I want to view my order and reservation history." },
+                    { id: "US-C031", text: "As a customer, I want to favorite restaurants." }
+                ],
+                "Group Payment ('Kitty')": [
+                    { id: "US-C032", text: "As a customer, when making a reservation for an event/group with a special menu, I want the option to create a 'group kitty' for advance payment." },
+                    { id: "US-C033", text: "As a customer (group organizer), I want to define the amount per person and invite participants to pay their share through the app." },
+                    { id: "US-C034", text: "As a customer (group participant), I want to securely pay my share through the app." },
+                    { id: "US-C035", text: "As a customer, I want to be informed about the cashback or refund policies for kitty payments, as defined by the restaurant." }
+                ]
+            },
+            pt: {
+                "Descoberta e Pesquisa de Restaurantes": [
+                    { id: "US-C001", text: "Como cliente, quero poder ver os restaurantes próximos à minha localização atual." },
+                    { id: "US-C002", text: "Como cliente, quero poder pesquisar restaurantes por nome, tipo de cozinha ou prato específico." },
+                    { id: "US-C003", text: "Como cliente, quero poder filtrar restaurantes por categoria (ver secção 4), subcategoria, faixa de preço, avaliação, horário e serviços oferecidos." },
+                    { id: "US-C004", text: "Como cliente, quero poder encontrar restaurantes para refeições específicas (pequeno-almoço, almoço, jantar, lanche)." },
+                    { id: "US-C005", text: "Como cliente, quero poder encontrar restaurantes com menus especiais para ocasiões (jantar romântico, aniversário, reunião de negócios, comemorações)." },
+                    { id: "US-C006", text: "Como cliente, quero poder encontrar restaurantes alinhados com a minha dieta ou restrição alimentar (ex: vegano, vegetariano, sem glúten, sem lactose)." },
+                    { id: "US-C007", text: "Como cliente, quero poder ver os restaurantes ordenados por popularidade ou avaliação." },
+                    { id: "US-C008", text: "Como cliente, quero poder ver o perfil completo de um restaurante (fotos, descrição, menu, localização no mapa, horário, avaliações, regras)." }
+                ],
+                "Visualização de Menu e Pedido (No Restaurante via QR Code)": [
+                    { id: "US-C009", text: "Como cliente, quero poder ler um QR Code na mesa para aceder ao menu digital do restaurante." },
+                    { id: "US-C010", text: "Como cliente, quero poder navegar pelas categorias e itens do menu." },
+                    { id: "US-C011", text: "Como cliente, quero poder ver os detalhes dos itens (descrição, preço, foto, ingredientes, alergénios)." },
+                    { id: "US-C012", text: "Como cliente, quero poder adicionar itens ao meu pedido, especificando quantidades e opções de personalização." },
+                    { id: "US-C013", text: "Como cliente, quero poder adicionar observações ao meu pedido ou a itens específicos." },
+                    { id: "US-C014", text: "Como cliente, quero poder submeter o meu pedido para a cozinha diretamente pela app." },
+                    { id: "US-C015", text: "Como cliente, quero poder ver o estado do meu pedido em tempo real." },
+                    { id: "US-C016", text: "Como cliente, quero poder chamar o empregado de mesa ou pedir a conta através da app (opcional)." }
+                ],
+                "Reservas": [
+                    { id: "US-C017", text: "Como cliente, quero poder pedir uma reserva num restaurante, especificando data, hora, número de pessoas e observações." },
+                    { id: "US-C018", text: "Como cliente, quero poder selecionar um menu especial para a minha reserva, se disponível para a ocasião." },
+                    { id: "US-C019", text: "Como cliente, quero receber notificações sobre o estado da minha reserva (confirmada, pendente, rejeitada)." },
+                    { id: "US-C020", text: "Como cliente, quero poder ver as minhas reservas futuras e passadas." },
+                    { id: "US-C021", text: "Como cliente, quero poder cancelar ou modificar uma reserva (de acordo com a política do restaurante)." }
+                ],
+                "Programa de Fidelidade": [
+                    { id: "US-C022", text: "Como cliente, quero poder aderir ao programa de fidelidade de um restaurante." },
+                    { id: "US-C023", text: "Como cliente, quero poder acompanhar o meu progresso no programa de fidelidade do restaurante (pontos, visitas)." },
+                    { id: "US-C024", text: "Como cliente, quero poder ver as recompensas disponíveis e como resgatá-las." },
+                    { id: "US-C025", text: "Como cliente, quero ser notificado sobre ofertas e promoções exclusivas do programa de fidelidade." }
+                ],
+                "Perfil do Cliente e Interações": [
+                    { id: "US-C026", text: "Como cliente, quero poder criar e gerir o meu perfil (nome, foto, informações de contacto, preferências alimentares gerais)." },
+                    { id: "US-C027", text: "Como cliente, quero poder avaliar um restaurante e os seus serviços após uma visita/pedido (pontuação, comentário)." },
+                    { id: "US-C028", text: "Como cliente, quero poder enviar sugestões privadas a um restaurante." },
+                    { id: "US-C029", text: "Como cliente, quero poder convidar amigos para instalar a app através de um link de referência." },
+                    { id: "US-C030", text: "Como cliente, quero poder ver o meu histórico de pedidos e reservas." },
+                    { id: "US-C031", text: "Como cliente, quero poder favoritar restaurantes." }
+                ],
+                "Pagamento de Grupo ('Vaquinha')": [
+                    { id: "US-C032", text: "Como cliente, ao fazer uma reserva para um evento/grupo com menu especial, quero ter a opção de criar uma 'vaquinha' para o pagamento antecipado." },
+                    { id: "US-C033", text: "Como cliente (organizador do grupo), quero poder definir o valor por pessoa e convidar os participantes a pagar a sua parte através da app." },
+                    { id: "US-C034", text: "Como cliente (participante do grupo), quero poder pagar a minha parte de forma segura através da app." },
+                    { id: "US-C035", text: "Como cliente, quero ser informado sobre as políticas de cashback ou reembolso dos pagamentos da 'vaquinha', definidas pelo restaurante." }
+                ]
+            }
+        },
+        restaurantCategoriesData: {
+            en: [
+                { name: "By Cuisine Type", items: ["Italian (Sub: Pizzeria, Pasta, Trattoria)", "Japanese (Sub: Sushi, Ramen, Izakaya)", "Portuguese (Sub: Traditional, Tapas/Snacks, Seafood)", "Brazilian (Sub: Steakhouse, Regional, Pub Food)", "Indian", "Chinese", "Mexican", "American (Sub: Burger Joint, Steakhouse)", "Mediterranean", "Arab/Lebanese", "African", "Vegetarian/Vegan", "Healthy/Fit"] },
+                { name: "By Atmosphere/Occasion", items: ["Romantic", "Family (With kids' area)", "For Groups", "Business Meetings", "With a View", "Outdoor/Terrace", "Bar/Pub (food-focused)"] },
+                { name: "By Meal", items: ["Breakfast/Brunch", "Executive Lunch", "Dinner", "Cafeteria/Pastry Shop"] }
+            ],
+            pt: [
+                { name: "Por Tipo de Cozinha", items: ["Italiana (Sub: Pizzaria, Pasta, Trattoria)", "Japonesa (Sub: Sushi, Ramen, Izakaya)", "Portuguesa (Sub: Tradicional, Tapas/Petiscos, Marisqueira)", "Brasileira (Sub: Churrascaria, Regional, Comida de Boteco)", "Indiana", "Chinesa", "Mexicana", "Americana (Sub: Hamburgueria, Steakhouse)", "Mediterrânica", "Árabe/Libanesa", "Africana", "Vegetariana/Vegana", "Saudável/Fit"] },
+                { name: "Por Ambiente/Ocasião", items: ["Romântico", "Familiar (Com espaço infantil)", "Para Grupos", "Reuniões de Negócios", "Com Vista", "Ar Livre/Esplanada", "Bar/Pub (com foco em comida)"] },
+                { name: "Por Refeição", items: ["Pequeno-almoço/Brunch", "Almoço Executivo", "Jantar", "Cafetaria/Pastelaria"] }
+            ]
+        },
+        specialMenusData: {
+            en: [
+                "Valentine's Day Menu", "Birthday Menu (individual or group)", "Christmas / New Year's Menu",
+                "Executive Menu (Lunch)", "Tasting Menu", "Children's Menu", "Group/Corporate Event Menu"
+            ],
+            pt: [
+                "Menu Dia dos Namorados", "Menu de Aniversário (individual ou grupo)", "Menu de Natal / Ano Novo",
+                "Menu Executivo (Almoço)", "Menu de Degustação", "Menu Infantil", "Menu para Eventos de Grupo/Empresas"
+            ]
+        },
+        userFlowsData: {
+            en: [
+                {
+                    title: "Flow 1: Customer discovers and reserves a restaurant for a romantic dinner.",
+                    steps: [
+                        "Customer opens the app.", "Uses the filter 'Occasion: Romantic' and/or 'Cuisine: Italian'.", "Browses results, views profiles (photos, menu, reviews).",
+                        "Selects a restaurant.", "Clicks 'Reserve'.", "Chooses date, time, number of people (2).", "Checks for 'Valentine's Day Special Menu' and selects it (if desired).",
+                        "Adds a note (e.g., 'table near the window').", "Confirms reservation request.", "Receives reservation confirmation notification from the restaurant."
+                    ]
+                },
+                {
+                    title: "Flow 2: Restaurant manages an in-table order via QR Code.",
+                    steps: [
+                        "Customer at the restaurant scans the table's QR Code.", "Browses the digital menu in the app and adds items to the order.", "Submits the order.",
+                        "Restaurant administrator receives notification in the BackOffice.", "Views order details (table X, items Y, Z).", "Changes status to 'Preparing'.",
+                        "(Kitchen/Bar prepares items)", "Changes status to 'Ready to Serve'.", "(Waiter delivers the order)", "Changes status to 'Delivered'.",
+                        "(After consumption) Customer requests the bill (via app or verbally).", "Administrator closes the bill in the system, records payment."
+                    ]
+                },
+                {
+                    title: "Flow 3: Customer participates in a loyalty program.",
+                    steps: [
+                        "Customer visits a restaurant and places an order.", "At payment, the restaurant registers the visit/consumption associated with the customer's profile in the app (or customer scans a loyalty code).",
+                        "Customer views their progress in restaurant X's loyalty program in their app.", "After meeting the criteria (e.g., 5 visits), customer receives notification of available reward.",
+                        "On next visit, customer informs they wish to redeem the reward.", "Restaurant validates redemption in the BackOffice."
+                    ]
+                },
+                {
+                    title: "Flow 4: Group of friends organizes a 'group kitty' for a birthday menu.",
+                    steps: [
+                        "Customer (organizer) finds a restaurant that offers a 'Birthday Menu for Groups'.", "Makes a reservation for 10 people, selecting the special menu.",
+                        "In the app, chooses the 'Create Group Kitty' option for this event.", "The system calculates the amount per person.", "Organizer sends the kitty link to the 9 friends.",
+                        "Friends access the link, view details, and pay their share through the app.", "Organizer and restaurant track payments.", "On the event day, the main payment is already settled."
+                    ]
+                }
+            ],
+            pt: [
+                {
+                    title: "Fluxo 1: Cliente descobre e reserva um restaurante para um jantar romântico.",
+                    steps: [
+                        "Cliente abre a app.", "Usa o filtro 'Ocasião: Romântico' e/ou 'Cozinha: Italiana'.", "Navega pelos resultados, vê perfis (fotos, menu, avaliações).",
+                        "Seleciona um restaurante.", "Clica em 'Reservar'.", "Escolhe data, hora, número de pessoas (2).", "Verifica se há 'Menu Especial Dia dos Namorados' e seleciona-o (se desejar).",
+                        "Adiciona uma observação (ex: 'mesa perto da janela').", "Confirma o pedido de reserva.", "Recebe a notificação de confirmação da reserva pelo restaurante."
+                    ]
+                },
+                {
+                    title: "Fluxo 2: Restaurante gere um pedido na mesa via QR Code.",
+                    steps: [
+                        "Cliente no restaurante lê o QR Code da mesa.", "Navega pelo menu digital na app e adiciona itens ao pedido.", "Submete o pedido.",
+                        "Administrador do restaurante recebe notificação no BackOffice.", "Vê os detalhes do pedido (mesa X, itens Y, Z).", "Muda o estado para 'Em preparação'.",
+                        "(Cozinha/Bar prepara os itens)", "Muda o estado para 'Pronto a servir'.", "(Empregado de mesa entrega o pedido)", "Muda o estado para 'Entregue'.",
+                        "(Após o consumo) Cliente pede a conta (pela app ou verbalmente).", "Administrador fecha a conta no sistema, regista o pagamento."
+                    ]
+                },
+                {
+                    title: "Fluxo 3: Cliente participa num programa de fidelidade.",
+                    steps: [
+                        "Cliente visita um restaurante e faz um pedido.", "No pagamento, o restaurante regista a visita/consumo associado ao perfil do cliente na app (ou o cliente lê um código de fidelidade).",
+                        "Cliente vê o seu progresso no programa de fidelidade do restaurante X na sua app.", "Após cumprir os critérios (ex: 5 visitas), o cliente recebe uma notificação de recompensa disponível.",
+                        "Na próxima visita, o cliente informa que deseja resgatar a recompensa.", "Restaurante valida o resgate no BackOffice."
+                    ]
+                },
+                {
+                    title: "Fluxo 4: Grupo de amigos organiza uma 'vaquinha' para um menu de aniversário.",
+                    steps: [
+                        "Cliente (organizador) encontra um restaurante que oferece 'Menu de Aniversário para Grupos'.", "Faz uma reserva para 10 pessoas, selecionando o menu especial.",
+                        "Na app, escolhe a opção 'Criar Vaquinha' para este evento.", "O sistema calcula o valor por pessoa.", "Organizador envia o link da vaquinha para os 9 amigos.",
+                        "Amigos acedem ao link, veem os detalhes e pagam a sua parte através da app.", "Organizador e restaurante acompanham os pagamentos.", "No dia do evento, o pagamento principal já está resolvido."
+                    ]
+                }
+            ]
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentLang = 'en'; // Default language
+        let usChartInstance = null;
+
+        const mainNav = document.getElementById('mainNav');
+        const contentSections = document.querySelectorAll('.content-section');
+        const navButtons = mainNav.querySelectorAll('.nav-button');
+        const langSwitcher = document.getElementById('langSwitcher');
+
+        function updateUI(lang) {
+            currentLang = lang;
+            
+            // Update active language button
+            langSwitcher.querySelectorAll('.lang-button').forEach(btn => {
+                 btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            document.documentElement.lang = lang;
+            
+            // 1. Update all static text
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (translations[key] && translations[key][lang]) {
+                    el.innerHTML = translations[key][lang];
+                }
+            });
+            document.querySelectorAll('[data-lang-placeholder-key]').forEach(el => {
+                const key = el.dataset.langPlaceholderKey;
+                 if (translations[key] && translations[key][lang]) {
+                    el.placeholder = translations[key][lang];
+                }
+            });
+
+            // 2. Populate lists
+            document.getElementById('overviewList1').innerHTML = translations.overviewList1[lang].map(item => `<li>${item}</li>`).join('');
+            document.getElementById('overviewList2').innerHTML = translations.overviewList2[lang].map(item => `<li>${item}</li>`).join('');
+            document.getElementById('profile1NeedsList').innerHTML = translations.profile1NeedsList[lang].map(item => `<li>${item}</li>`).join('');
+            document.getElementById('profile2NeedsList').innerHTML = translations.profile2NeedsList[lang].map(item => `<li>${item}</li>`).join('');
+
+            // 3. Re-create dynamic content
+            createAccordion('backOfficeAccordion', translations.backOfficeData[lang], 'searchBackOffice');
+            createAccordion('frontOfficeAccordion', translations.frontOfficeData[lang], 'searchFrontOffice');
+            populateCategories(translations.restaurantCategoriesData[lang]);
+            populateSpecialMenus(translations.specialMenusData[lang]);
+            populateUserFlows(translations.userFlowsData[lang]);
+            
+            // 4. Re-render chart if visible
+            if (document.getElementById('analiseRequisitosSection').classList.contains('active')) {
+                renderUSCountChart();
+            }
+        }
+
+        function showSection(sectionId) {
+            contentSections.forEach(section => section.classList.remove('active'));
+            navButtons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(sectionId)?.classList.add('active');
+            mainNav.querySelector(`[data-section="${sectionId}"]`)?.classList.add('active');
+            
+            if (sectionId === 'analiseRequisitosSection') {
+                renderUSCountChart();
+            }
+        }
+
+        mainNav.addEventListener('click', e => {
+            if (e.target.matches('.nav-button')) {
+                showSection(e.target.dataset.section);
+            }
+        });
+        
+        langSwitcher.addEventListener('click', e => {
+            if (e.target.matches('.lang-button')) {
+                updateUI(e.target.dataset.lang);
+            }
+        });
+
+        function createAccordion(containerId, data, searchInputId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            Object.entries(data).forEach(([moduleName, usList]) => {
+                const accordionItem = document.createElement('div');
+                const header = document.createElement('div');
+                header.classList.add('accordion-header', 'flex', 'justify-between', 'items-center');
+                header.innerHTML = `<span>${moduleName} (${usList.length} US)</span><span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>`;
+
+                const content = document.createElement('div');
+                content.classList.add('accordion-content', 'bg-white');
+                usList.forEach(us => {
+                    const usDiv = document.createElement('div');
+                    usDiv.classList.add('us-item');
+                    usDiv.innerHTML = `<strong class="text-sky-600">${us.id}:</strong> ${us.text}`;
+                    content.appendChild(usDiv);
+                });
+
+                header.addEventListener('click', () => {
+                    const currentlyOpen = document.querySelector(`#${containerId} .accordion-content[style*="display: block"]`);
+                    if (currentlyOpen && currentlyOpen !== content) {
+                        currentlyOpen.style.display = 'none';
+                        currentlyOpen.previousElementSibling.querySelector('.arrow').style.transform = 'rotate(0deg)';
+                    }
+                    const isOpening = content.style.display !== 'block';
+                    content.style.display = isOpening ? 'block' : 'none';
+                    header.querySelector('.arrow').style.transform = isOpening ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+
+                accordionItem.appendChild(header);
+                accordionItem.appendChild(content);
+                container.appendChild(accordionItem);
+            });
+
+            const searchInput = document.getElementById(searchInputId);
+            if (searchInput) {
+                 searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    container.querySelectorAll('.accordion-header').forEach(header => {
+                        const contentDiv = header.nextElementSibling;
+                        const usItems = contentDiv.querySelectorAll('.us-item');
+                        let moduleHasMatch = false;
+
+                        usItems.forEach(usItem => {
+                            const match = usItem.textContent.toLowerCase().includes(searchTerm);
+                            usItem.style.display = match ? 'block' : 'none';
+                            if (match) moduleHasMatch = true;
+                        });
+
+                        header.parentElement.style.display = moduleHasMatch || searchTerm.length === 0 ? 'block' : 'none';
+                    });
+                });
+            }
+        }
+        
+        function populateCategories(data) {
+            const container = document.getElementById('restaurantCategories');
+            container.innerHTML = '';
+            data.forEach(catGroup => {
+                const groupDiv = document.createElement('div');
+                groupDiv.classList.add('mb-3', 'p-4', 'bg-slate-50', 'rounded-md');
+                groupDiv.innerHTML = `
+                    <h4 class="font-semibold text-md text-sky-600 mb-1">${catGroup.name}</h4>
+                    <ul class="list-disc list-inside pl-2 space-y-1 text-sm">
+                        ${catGroup.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>`;
+                container.appendChild(groupDiv);
+            });
+        }
+        
+        function populateSpecialMenus(data) {
+            const container = document.getElementById('specialMenus');
+            container.innerHTML = data.map(menu => `<li>${menu}</li>`).join('');
+        }
+
+        function populateUserFlows(data) {
+            const container = document.getElementById('userFlowsAccordion');
+            container.innerHTML = '';
+             data.forEach(flow => {
+                const accordionItem = document.createElement('div');
+                const header = document.createElement('div');
+                header.classList.add('accordion-header', 'flex', 'justify-between', 'items-center');
+                header.innerHTML = `<span>${flow.title}</span><span class="arrow text-sky-700 transform transition-transform duration-300">&#9662;</span>`;
+
+                const content = document.createElement('div');
+                content.classList.add('accordion-content', 'bg-white');
+                content.innerHTML = `<ol class="list-decimal list-inside pl-4 space-y-1">${flow.steps.map(step => `<li>${step}</li>`).join('')}</ol>`;
+                
+                header.addEventListener('click', () => {
+                    const currentlyOpen = container.querySelector('.accordion-content[style*="display: block"]');
+                     if (currentlyOpen && currentlyOpen !== content) {
+                        currentlyOpen.style.display = 'none';
+                        currentlyOpen.previousElementSibling.querySelector('.arrow').style.transform = 'rotate(0deg)';
+                    }
+                    const isOpening = content.style.display !== 'block';
+                    content.style.display = isOpening ? 'block' : 'none';
+                    header.querySelector('.arrow').style.transform = isOpening ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+
+                accordionItem.appendChild(header);
+                accordionItem.appendChild(content);
+                container.appendChild(accordionItem);
+            });
+        }
+        
+        function renderUSCountChart() {
+            if (usChartInstance) {
+                usChartInstance.destroy();
+            }
+            const ctx = document.getElementById('usCountChart').getContext('2d');
+            const backOfficeModules = translations.backOfficeData[currentLang];
+            const frontOfficeModules = translations.frontOfficeData[currentLang];
+            
+            const labels = [
+                ...Object.keys(backOfficeModules).map(name => `${name} (Back)`),
+                ...Object.keys(frontOfficeModules).map(name => `${name} (Front)`)
+            ];
+            const dataCounts = [
+                ...Object.values(backOfficeModules).map(list => list.length),
+                ...Object.values(frontOfficeModules).map(list => list.length)
+            ];
+
+            usChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: translations.chartLabel[currentLang],
+                        data: dataCounts,
+                        backgroundColor: 'rgba(3, 105, 161, 0.7)',
+                        borderColor: 'rgba(2, 82, 128, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: translations.chartXLabel[currentLang] }
+                        },
+                        y: {
+                            ticks: { autoSkip: false, font: { size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: context => ` ${context.dataset.label}: ${context.raw}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // --- Initial Load ---
+        showSection('visaoGeralSection');
+        updateUI(currentLang); // Initial UI render in default language
+    });
+</script>
+</body>
+</html>
