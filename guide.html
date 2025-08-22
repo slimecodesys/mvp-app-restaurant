@@ -1,695 +1,783 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia do Desenvolvedor</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            position: fixed;
-            height: 100%;
-            overflow-y: auto;
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(0);
-            z-index: 1000;
-        }
-
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
-        
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ecf0f1;
-        }
-        
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-        
-        .sidebar ul li button {
-            background: none;
-            border: none;
-            color: #ecf0f1;
-            font-size: 16px;
-            width: 100%;
-            text-align: left;
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px;
-        }
-        
-        .sidebar ul li button:hover, .sidebar ul li button.active {
-            background-color: #34495e;
-            color: #3498db;
-        }
-        
-        .content {
-            flex-grow: 1;
-            margin-left: 250px;
-            padding: 40px;
-            transition: margin-left 0.3s ease-in-out;
-        }
-
-        .content.full-width {
-            margin-left: 0;
-        }
-        
-        .content section {
-            display: none;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-        
-        .content section.active {
-            display: block;
-        }
-        
-        h1, h3 {
-            color: #2c3e50;
-        }
-        
-        h4 {
-            color: #3498db;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 5px;
-            margin-top: 25px;
-        }
-        
-        code {
-            background-color: #eef;
-            padding: 2px 4px;
-            border-radius: 4px;
-            color: #c0392b;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        
-        pre {
-            background-color: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            line-height: 1.4;
-            font-size: 14px;
-        }
-
-        pre code {
-            background-color: transparent;
-            color: #f8f8f2;
-            padding: 0;
-            font-size: 14px;
-        }
-        
-        ul, ol {
-            line-height: 1.6;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        th {
-            background-color: #34495e;
-            color: #fff;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            border: none;
-            padding: 10px 15px;
-            font-size: 24px;
-            cursor: pointer;
-            border-radius: 5px;
-            z-index: 1001;
-            display: none;
-        }
-
-        .collapsible-header {
-            cursor: pointer;
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-left: 5px solid #3498db;
-            margin-top: 20px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
-            padding: 0 15px;
-            background-color: #f9f9f9;
-        }
-
-        .collapsible-content.open {
-            max-height: 1000px; /* Grande o suficiente para a maioria dos conteúdos */
-            padding: 15px;
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.visible {
-                transform: translateX(0);
-            }
-            .content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            .toggle-btn {
-                display: block;
-            }
-            .content.sidebar-visible {
-                margin-left: 250px;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slime Code — Guia para Desenvolvedores</title>
+  <!-- Syntax highlight (light + dark will be handled via classes) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <style>
+    :root{
+      --bg:#0f1220;        /* dark default */
+      --card:#171a2b;
+      --text:#e9edf5;
+      --muted:#aab2c8;
+      --brand1:#00c6ff;
+      --brand2:#6a11cb;
+      --border:#2a2f45;
+    }
+    html.light{
+      --bg:#ffffff; --card:#f6f7fb; --text:#1f2430; --muted:#58627a; --border:#e6e8ef;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    header{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 16px;background:linear-gradient(90deg,var(--card),rgba(0,0,0,0));border-bottom:1px solid var(--border)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:40px;aspect-ratio:1/1;object-fit:contain;border-radius:8px;background:#fff0}
+    .title{font-weight:700}
+    .controls{display:flex;align-items:center;gap:8px}
+    .control{appearance:none;border:1px solid var(--border);background:var(--card);color:var(--text);padding:8px 10px;border-radius:10px;cursor:pointer}
+    .search{min-width:220px}
+    .layout{display:grid;grid-template-columns:280px 1fr;gap:18px;padding:18px}
+    aside{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 72px);overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
+    .toc h3{margin:4px 0 10px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .toc a{display:block;padding:6px 8px;border-radius:8px;color:var(--text);text-decoration:none}
+    .toc a:hover{background:rgba(255,255,255,.06)}
+    .toc .sub{padding-left:10px}
+    main{max-width:1100px;margin:0 auto}
+    section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;margin:0 0 20px}
+    h1,h2,h3{line-height:1.2}
+    h1{font-size:26px;margin:0 0 10px;background:linear-gradient(90deg,var(--brand1),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    h2{font-size:22px;margin:20px 0 8px;color:var(--brand1)}
+    h3{font-size:18px;margin:18px 0 6px;color:var(--brand2)}
+    p,li{color:var(--text)}
+    code, pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{position:relative;background:#0b0e19;border:1px solid var(--border);border-radius:14px;padding:14px;overflow:auto}
+    pre .copy{position:absolute;top:8px;right:8px;font-size:12px;border:1px solid var(--border);background:#11162a;color:var(--text);padding:4px 8px;border-radius:8px;cursor:pointer}
+    kbd{background:#11162a;border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:12px}
+    .note{border-left:3px solid var(--brand1);padding:10px 12px;background:rgba(0,198,255,.04);border-radius:8px}
+    .grid-2{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+    /* language visibility */
+    [lang]{display:none}
+    [lang].visible{display:block}
+    /* search highlight */
+    mark{background:rgba(255,230,0,.3);padding:0 2px;border-radius:3px}
+  </style>
 </head>
 <body>
-
-    <button class="toggle-btn" id="toggle-sidebar">☰</button>
-
-    <div class="sidebar" id="sidebar">
-        <h2>Guia Dev</h2>
-        <ul>
-            <li><button onclick="showContent('git')">Git</button></li>
-            <li><button onclick="showContent('java')">Java</button></li>
-            <li><button onclick="showContent('spring-boot')">Spring Boot</button></li>
-            <li><button onclick="showContent('spring-data-jpa')">Spring Data JPA</button></li>
-            <li><button onclick="showContent('camadas')">Estrutura de Camadas</button></li>
-        </ul>
+  <header>
+    <div class="brand">
+      <img src="Slime code.png" alt="Slime Code" onerror="this.style.display='none'"/>
+      <div class="title">Slime Code — Developer Guide</div>
     </div>
+    <div class="controls">
+      <input id="q" class="control search" type="search" placeholder="Pesquisar / Search…"/>
+      <button id="lang" class="control" title="Switch language">PT</button>
+      <button id="theme" class="control" title="Toggle theme">🌙</button>
+      <button id="print" class="control" title="Print / PDF">🖨️</button>
+    </div>
+  </header>
 
-    <div class="content" id="main-content">
-        <section id="git">
-            <h1>Git</h1>
-            <p>O Git é um sistema de controle de versão distribuído, essencial para o desenvolvimento de software. Ele permite que múltiplos desenvolvedores trabalhem em um projeto simultaneamente sem sobrescrever o trabalho um do outro.</p>
+  <div class="layout">
+    <aside>
+      <div class="toc">
+        <h3>Índice / TOC</h3>
+        <div id="toc"></div>
+      </div>
+    </aside>
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Criar uma Branch a partir de uma (dev)</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>Um fluxo comum para criar uma nova branch a partir de uma branch base, como a <code>dev</code>, é o seguinte:</p>
-                    <ol>
-                        <li><strong>Vá para a branch base:</strong> Certifique-se de que você está na branch <code>dev</code>.</li>
-                        <pre><code>$ git checkout dev</code></pre>
-                        <li><strong>Atualize a branch base:</strong> Puxe as últimas alterações do repositório remoto para garantir que sua branch local está sincronizada.</li>
-                        <pre><code>$ git pull origin dev</code></pre>
-                        <li><strong>Crie e mude para a nova branch:</strong> Use o comando <code>-b</code> para criar e, ao mesmo tempo, mudar para a nova branch.</li>
-                        <pre><code>$ git checkout -b &lt;nome-da-branch&gt;</code></pre>
-                        <li><strong>Suba a nova branch para o repositório remoto:</strong> Isso permite que outros desenvolvedores possam ver e acessar sua branch.</li>
-                        <pre><code>$ git push -u origin &lt;nome-da-branch&gt;</code></pre>
-                    </ol>
-                </div>
-            </div>
+    <main id="content">
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Fazer merge para a Branch (dev)</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>O merge é o processo de integrar as alterações de uma branch em outra. Para fazer o merge da sua branch de feature de volta para a <code>dev</code>:</p>
-                    <ol>
-                        <li><strong>Troque para a branch de destino:</strong> Vá para a branch que receberá as alterações.</li>
-                        <pre><code>$ git checkout dev</code></pre>
-                        <li><strong>Atualize a branch de destino:</strong> Puxe as últimas alterações do repositório remoto.</li>
-                        <pre><code>$ git pull origin dev</code></pre>
-                        <li><strong>Faça o merge:</strong> Integre as alterações da sua branch de feature.</li>
-                        <pre><code>$ git merge &lt;nome-da-branch-feature&gt;</code></pre>
-                        <li><strong>Resolva conflitos (se houver):</strong> Se o Git detectar conflitos, você precisará resolvê-los manualmente e depois adicionar os arquivos corrigidos com <code>git add</code>.</li>
-                        <li><strong>Suba as alterações para o remoto:</strong> Envie as alterações da branch <code>dev</code> para o repositório remoto.</li>
-                        <pre><code>$ git push origin dev</code></pre>
-                        <li><strong>Apagar a branch local:</strong> Depois do merge, você pode deletar a branch de feature localmente.</li>
-                        <pre><code>$ git branch -d &lt;nome-da-branch-feature&gt;</code></pre>
-                        <li><strong>Apagar a branch remotamente:</strong> Deletar a branch do repositório remoto.</li>
-                        <pre><code>$ git push origin --delete &lt;nome-da-branch-feature&gt;</code></pre>
-                    </ol>
-                </div>
-            </div>
-        </section>
+      <!-- =================== GIT =================== -->
+      <section id="sec-git">
+        <h1 data-i18n-pt="Git" data-i18n-en="Git">Git</h1>
 
-        <section id="java">
-            <h1>Java</h1>
-            <p>O Java é uma linguagem de programação orientada a objetos, popular para o desenvolvimento de aplicações robustas e seguras. Aqui abordamos um conceito fundamental.</p>
+        <div class="grid-2">
+          <div lang="pt" class="visible">
+            <h2>Criar uma Branch a partir de uma (dev)</h2>
+            <p>Exemplo de fluxo alinhado ao Jira (Scrum). A nova branch deve ser o <strong>ID da tarefa</strong> em que o desenvolvedor estiver a trabalhar.</p>
+            <ol>
+              <li>
+                <p><strong>Ir para a branch base</strong> (ex.: <code>dev</code>):</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout dev</code></pre>
+              </li>
+              <li>
+                <p><strong>Atualizar a branch base</strong> com o remoto (boa prática):</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git pull origin dev</code></pre>
+              </li>
+              <li>
+                <p><strong>Criar uma nova branch</strong> a partir dela (use o ID do Jira):</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout -b &lt;JIRA-123&gt;</code></pre>
+              </li>
+              <li>
+                <p><strong>Subir a nova branch</strong> para o repositório remoto:</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git push -u origin &lt;JIRA-123&gt;</code></pre>
+              </li>
+            </ol>
+            <div class="note">Convenção sugerida: <code>feature/JIRA-123</code>, <code>fix/JIRA-456</code>, <code>chore/JIRA-789</code>.</div>
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Serializable</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>A interface <strong><code>Serializable</code></strong> é uma interface de marcação em Java que não possui métodos. Ao implementar essa interface, você indica que um objeto pode ser transformado em uma sequência de bytes (serializado). Isso é útil para:</p>
-                    <ul>
-                        <li>Persistir o objeto em um arquivo.</li>
-                        <li>Transmitir o objeto pela rede.</li>
-                        <li>Armazenar o objeto em cache.</li>
-                    </ul>
-                    <p>O Spring Boot utiliza a serialização em diversos contextos, como em DTOs, entidades e sessões HTTP.</p>
-                    <h4>Exemplo</h4>
-                    <pre><code>import java.io.Serializable;
+            <h2>Fazer merge para Branch (dev)</h2>
+            <p>Fluxo padrão de merge no Git.</p>
+            <ol>
+              <li>
+                <p><strong>Trocar para a branch de destino</strong> (<code>dev</code>):</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout dev</code></pre>
+              </li>
+              <li>
+                <p><strong>Atualizar</strong> a branch <code>dev</code> com o remoto:</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git pull origin dev</code></pre>
+              </li>
+              <li>
+                <p><strong>Fazer o merge</strong> da branch feature (ID do Jira):</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git merge &lt;JIRA-123&gt;</code></pre>
+                <p>Se não houver conflitos → merge automático. Se houver → resolva, faça <code>git add</code> nos arquivos e conclua.</p>
+              </li>
+              <li>
+                <p><strong>Subir</strong> a <code>dev</code> atualizada:</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git push origin dev</code></pre>
+              </li>
+              <li>
+                <p><strong>Limpeza de branches</strong>:</p>
+                <pre><button class="copy">Copiar</button><code class="language-bash">$ git branch -d &lt;JIRA-123&gt;
+$ git push origin --delete &lt;JIRA-123&gt;</code></pre>
+              </li>
+            </ol>
+          </div>
 
-public class User implements Serializable {
-    private String name;
-    private int age;
+          <div lang="en">
+            <h2>Create a Branch from <code>dev</code></h2>
+            <p>Scrum/Jira-aligned flow. Name the branch with the <strong>Jira Task ID</strong>.</p>
+            <ol>
+              <li><p>Checkout base branch:</p>
+                <pre><button class="copy">Copy</button><code class="language-bash">$ git checkout dev</code></pre>
+              </li>
+              <li><p>Update base from remote:</p>
+                <pre><button class="copy">Copy</button><code class="language-bash">$ git pull origin dev</code></pre>
+              </li>
+              <li><p>Create your feature branch:</p>
+                <pre><button class="copy">Copy</button><code class="language-bash">$ git checkout -b &lt;JIRA-123&gt;</code></pre>
+              </li>
+              <li><p>Push and set upstream:</p>
+                <pre><button class="copy">Copy</button><code class="language-bash">$ git push -u origin &lt;JIRA-123&gt;</code></pre>
+              </li>
+            </ol>
+            <div class="note">Suggested naming: <code>feature/JIRA-123</code>, <code>fix/JIRA-456</code>, <code>chore/JIRA-789</code>.</div>
+            <h2>Merge into <code>dev</code></h2>
+            <ol>
+              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git checkout dev</code></pre></li>
+              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git pull origin dev</code></pre></li>
+              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git merge &lt;JIRA-123&gt;</code></pre></li>
+              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git push origin dev</code></pre></li>
+              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git branch -d &lt;JIRA-123&gt;
+$ git push origin --delete &lt;JIRA-123&gt;</code></pre></li>
+            </ol>
+          </div>
+        </div>
+      </section>
 
-    // Construtores, getters e setters
-}</code></pre>
-                </div>
-            </div>
-        </section>
+      <!-- =================== SPRING BOOT =================== -->
+      <section id="sec-spring-boot">
+        <h1 data-i18n-pt="Spring Boot" data-i18n-en="Spring Boot">Spring Boot</h1>
 
-        <section id="spring-boot">
-            <h1>Spring Boot</h1>
-            <p>O Spring Boot é um framework que simplifica a criação de aplicações Spring, permitindo o rápido desenvolvimento de APIs e microserviços.</p>
+        <div lang="pt" class="visible">
+          <h2>Tratamento global de exceções</h2>
+          <p>Implementar um tratamento global com <code>@RestControllerAdvice</code> centraliza erros e retorna respostas consistentes com o status HTTP.</p>
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Principais Anotações</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>No Spring Boot, anotações são usadas para configurar e descrever o comportamento dos componentes da sua aplicação. Algumas das mais importantes são:</p>
-                    <ul>
-                        <li><strong><code>@SpringBootApplication</code></strong>: Marca a classe principal da aplicação, combinando as funcionalidades de <code>@Configuration</code>, <code>@EnableAutoConfiguration</code> e <code>@ComponentScan</code>.</li>
-                        <li><strong><code>@Controller</code></strong> / <strong><code>@RestController</code></strong>: Indica que uma classe é um "Controller" na arquitetura MVC. <code>@RestController</code> é uma versão especializada para APIs REST, pois já inclui <code>@ResponseBody</code>.</li>
-                        <li><strong><code>@Service</code></strong>: Marca uma classe como um componente de serviço, que contém a lógica de negócio.</li>
-                        <li><strong><code>@Repository</code></strong>: Indica que uma classe é um componente de acesso a dados.</li>
-                        <li><strong><code>@Component</code></strong>: Anotação genérica para qualquer componente gerenciado pelo Spring.</li>
-                        <li><strong><code>@Autowired</code></strong>: Realiza a injeção automática de dependências. Embora popular, a injeção via construtor é a mais recomendada.</li>
-                        <li><strong><code>@RequestMapping</code></strong>: Mapeia requisições HTTP para métodos específicos do controller.</li>
-                        <li><strong><code>@GetMapping</code></strong>, <strong><code>@PostMapping</code></strong>, <strong><code>@PutMapping</code></strong>, <strong><code>@DeleteMapping</code></strong>: Anotações mais específicas que mapeiam os verbos HTTP correspondentes.</li>
-                    </ul>
-                </div>
-            </div>
+          <h3>1) Classe de resposta de erro</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Injeção de Dependências</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p><strong>Injeção de Dependência (DI)</strong> é um princípio de design de software em que uma classe não cria suas próprias dependências, mas as recebe de uma fonte externa (o framework, no caso do Spring).</p>
-                    <h4>Formas de Injeção no Spring</h4>
-                    <ul>
-                        <li><strong>Injeção via Construtor (Recomendada)</strong>: As dependências são passadas como argumentos no construtor da classe.
-                            <pre><code>@Service
-public class MatriculaService {
-    private final AlunoRepository alunoRepository;
+import java.time.LocalDateTime;
 
-    public MatriculaService(AlunoRepository alunoRepository) {
-        this.alunoRepository = alunoRepository;
-    }
-}</code></pre>
-                            <p><strong>Vantagens:</strong> imutabilidade, facilita testes, garantia de que a dependência não é nula.</p>
-                        </li>
-                        <li><strong>Injeção via Setter</strong>: As dependências são injetadas através de métodos setters. Usada para dependências opcionais.
-                            <pre><code>@Service
-public class MatriculaService {
-    private AlunoRepository alunoRepository;
-    
-    @Autowired
-    public void setAlunoRepository(AlunoRepository alunoRepository) {
-        this.alunoRepository = alunoRepository;
-    }
-}</code></pre>
-                        </li>
-                        <li><strong>Injeção via Campo (Menos Recomendada)</strong>: A dependência é injetada diretamente no campo da classe.
-                            <pre><code>@Service
-public class MatriculaService {
-    @Autowired
-    private AlunoRepository alunoRepository;
-}</code></pre>
-                            <p><strong>Problemas:</strong> Dificulta testes, oculta dependências reais e viola o princípio de imutabilidade.</p>
-                        </li>
-                    </ul>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Uso Recomendado?</th>
-                                <th>Observações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Construtor</td>
-                                <td>Sim</td>
-                                <td>Facilita testes, imutável</td>
-                            </tr>
-                            <tr>
-                                <td>Setter</td>
-                                <td>Opcional</td>
-                                <td>Para dependências opcionais</td>
-                            </tr>
-                            <tr>
-                                <td>Campo (@Autowired)</td>
-                                <td>Evitar</td>
-                                <td>Dificulta testes, não imutável</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>DTO (Data Transfer Object)</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>Um <strong>DTO</strong> é um objeto que transporta dados entre as camadas da sua aplicação, sem expor a entidade do banco de dados. Ele serve como uma barreira de segurança e encapsulamento.</p>
-                    <h4>Vantagens</h4>
-                    <ul>
-                        <li><strong>Segurança:</strong> Evita expor toda a estrutura da entidade.</li>
-                        <li><strong>Flexibilidade:</strong> Permite alterar a entidade sem quebrar a API.</li>
-                        <li><strong>Validação:</strong> Facilita a validação de dados de entrada.</li>
-                    </ul>
-                    <p>O mapeamento entre DTO e Entity pode ser feito manualmente ou com bibliotecas como <strong>MapStruct</strong> para automatizar o processo.</p>
-                    <h4>Exemplo de uso com MapStruct</h4>
-                    <pre><code>// Interface do Mapper
-@Mapper(componentModel = "spring")
-public interface ProdutoMapper {
-    ProdutoMapper INSTANCE = Mappers.getMapper(ProdutoMapper.class);
-
-    Produto toEntity(ProdutoDTO dto);
-    ProdutoDTO toDTO(Produto entity);
-}
-
-// Service refatorado
-@Service
-public class ProdutoService {
-    @Autowired
-    private ProdutoRepository produtoRepository;
-    @Autowired
-    private ProdutoMapper produtoMapper;
-
-    public ProdutoDTO criarProduto(ProdutoDTO dto) {
-        Produto produto = produtoMapper.toEntity(dto);
-        produto = produtoRepository.save(produto);
-        return produtoMapper.toDTO(produto);
-    }
-}</code></pre>
-                </div>
-            </div>
-
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Controllers no Spring Boot</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>No padrão MVC, o Controller é o componente responsável por <strong>receber requisições HTTP</strong>, interagir com a lógica de negócio (Service) e retornar a resposta adequada ao cliente. Ele atua como um ponto de entrada para a aplicação.</p>
-                    <h4>Anotações Fundamentais</h4>
-                    <ul>
-                        <li><code>@RestController</code>: Indica que a classe é um Controller REST.</li>
-                        <li><code>@RequestMapping</code>: Define o caminho base para os endpoints.</li>
-                        <li>Verbos HTTP (<code>@GetMapping</code>, <code>@PostMapping</code>, etc.): Mapeiam métodos para os verbos HTTP correspondentes.</li>
-                        <li><code>@PathVariable</code>: Lê valores da URL (ex: <code>/recursos/{id}</code>).</li>
-                        <li><code>@RequestParam</code>: Lê parâmetros de query (ex: <code>/recursos?page=1</code>).</li>
-                        <li><code>@RequestBody</code>: Converte o corpo da requisição JSON para um objeto Java.</li>
-                        <li><code>@ResponseStatus</code>: Define o status HTTP da resposta.</li>
-                    </ul>
-                    <h4>Boas Práticas</h4>
-                    <ul>
-                        <li>Manter os Controllers "finos", sem lógica de negócio.</li>
-                        <li>Usar DTOs para requisição e resposta.</li>
-                        <li>Retornar <code>ResponseEntity</code> para controlar status, headers e body da resposta.</li>
-                        <li>Tratar exceções de forma centralizada com <code>@RestControllerAdvice</code>.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Validações em DTOs</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>Para validar os campos de um DTO no Spring Boot, você precisa usar a biblioteca de validação. A dependência necessária no <code>pom.xml</code> é <code>spring-boot-starter-validation</code>.</p>
-                    <h4>Anotações de Validação Comuns</h4>
-                    <ul>
-                        <li><code>@NotNull</code>: O campo não pode ser nulo.</li>
-                        <li><code>@NotBlank</code>: Para Strings, não pode ser nulo nem vazio.</li>
-                        <li><code>@Size(min, max)</code>: Tamanho mínimo e máximo de uma string ou coleção.</li>
-                        <li><code>@Email</code>: Valida se o formato é de e-mail.</li>
-                        <li><code>@Min</code> / <code>@Max</code>: Define um valor numérico mínimo ou máximo.</li>
-                    </ul>
-                    <h4>Exemplo</h4>
-                    <p>Aplique as anotações diretamente no DTO e use <code>@Valid</code> no parâmetro do Controller:</p>
-                    <pre><code>public class UserDTO {
-    @NotBlank(message = "Name is mandatory")
-    private String name;
-
-    @Email(message = "Invalid email")
-    private String email;
-}
-
-@RestController
-public class UserController {
-    @PostMapping("/users")
-    public ResponseEntity&lt;UserDTO&gt; createUser(@Valid @RequestBody UserDTO userDto) {
-        // Lógica de criação
-        return ResponseEntity.ok(userDto);
-    }
-}</code></pre>
-                </div>
-            </div>
-
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Tratamento Global de Exceções</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>O <strong>tratamento global de exceções</strong> em uma API Spring Boot usando <code>@RestControllerAdvice</code> permite centralizar a manipulação de erros, garantindo respostas consistentes com o status HTTP correto para o cliente.</p>
-                    <h4>Passos para Implementação</h4>
-                    <ol>
-                        <li><strong>Crie uma classe de resposta de erro:</strong> um objeto que irá padronizar a resposta de erro.
-                            <pre><code>public class ErrorResponse {
+public class ErrorResponse {
     private LocalDateTime timestamp;
     private int status;
     private String error;
     private String message;
     private String path;
-    // construtor, getters e setters
-}</code></pre>
-                        </li>
-                        <li><strong>Defina exceções personalizadas:</strong> Crie classes de exceção para cada tipo de erro de negócio.
-                            <pre><code>public class NotFoundException extends RuntimeException {
-    public NotFoundException(String message) {
-        super(message);
+
+    public ErrorResponse(int status, String error, String message, String path) {
+        this.timestamp = LocalDateTime.now();
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
     }
+    // getters e setters
 }
-// outras classes como BadRequestException, ConflictException, etc.</code></pre>
-                        </li>
-                        <li><strong>Crie o <code>GlobalExceptionHandler</code>:</strong> Anotado com <code>@RestControllerAdvice</code>, esta classe irá capturar as exceções lançadas na aplicação.
-                            <pre><code>@RestControllerAdvice
+</code></pre>
+
+          <h3>2) Exceções personalizadas</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
+
+public class BadRequestException extends RuntimeException {
+    public BadRequestException(String message) { super(message); }
+}
+public class UnauthorizedException extends RuntimeException {
+    public UnauthorizedException(String message) { super(message); }
+}
+public class ForbiddenException extends RuntimeException {
+    public ForbiddenException(String message) { super(message); }
+}
+public class ConflictException extends RuntimeException {
+    public ConflictException(String message) { super(message); }
+}
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) { super(message); }
+}
+</code></pre>
+
+          <h3>3) GlobalExceptionHandler</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private ResponseEntity&lt;ErrorResponse&gt; buildResponse(Exception ex, HttpStatus status, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+            status.value(),
+            status.getReasonPhrase(),
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleBadRequest(BadRequestException ex, HttpServletRequest request) {
+        return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
+    }
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleUnauthorized(UnauthorizedException ex, HttpServletRequest request) {
+        return buildResponse(ex, HttpStatus.UNAUTHORIZED, request);
+    }
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleForbidden(ForbiddenException ex, HttpServletRequest request) {
+        return buildResponse(ex, HttpStatus.FORBIDDEN, request);
+    }
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleConflict(ConflictException ex, HttpServletRequest request) {
+        return buildResponse(ex, HttpStatus.CONFLICT, request);
+    }
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity&lt;ErrorResponse&gt; handleNotFound(NotFoundException ex, HttpServletRequest request) {
-        // Lógica para construir e retornar a resposta 404
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildResponse(...));
+        return buildResponse(ex, HttpStatus.NOT_FOUND, request);
     }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity&lt;ErrorResponse&gt; handleGeneric(Exception ex, HttpServletRequest request) {
-        // Lógica para capturar e tratar exceções genéricas (500)
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildResponse(...));
+        return buildResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
-}</code></pre>
-                        </li>
-                        <li><strong>Integre com o Service e Controller:</strong> Lance as exceções personalizadas na camada de serviço, e o <code>@RestControllerAdvice</code> se encarregará de tratá-las automaticamente.
-                            <pre><code>@Service
+}
+</code></pre>
+
+          <h3>4) Uso em Service</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">package com.example.api.service;
+
+import com.example.api.exception.BadRequestException;
+import com.example.api.exception.ConflictException;
+import com.example.api.exception.NotFoundException;
+import com.example.api.model.Category;
+import com.example.api.repository.CategoryRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
 public class CategoryService {
-    // ...
+    private final CategoryRepository repository;
+    public CategoryService(CategoryRepository repository) { this.repository = repository; }
+
+    @Transactional
+    public Category createCategory(String name) {
+        if (name == null || name.isBlank()) {
+            throw new BadRequestException("Category name is missing or invalid.");
+        }
+        if (repository.findByNameIgnoreCase(name).isPresent()) {
+            throw new ConflictException("Category already exists.");
+        }
+        Category newCategory = new Category(name);
+        return repository.save(newCategory);
+    }
+
     public Category getCategory(Long id) {
         return repository.findById(id)
-                        .orElseThrow(() -> new NotFoundException("Category not found."));
+            .orElseThrow(() -> new NotFoundException("Category not found."));
     }
-}</code></pre>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-        </section>
+}
+</code></pre>
 
-        <section id="spring-data-jpa">
-            <h1>Spring Data JPA</h1>
-            <p>O Spring Data JPA é uma abstração do JPA que simplifica a implementação de repositórios, permitindo a criação de classes de acesso a dados com menos código.</p>
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>Associações</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>Em JPA, uma associação é uma relação entre entidades que reflete as relações entre as tabelas do banco de dados.</p>
-                    <ul>
-                        <li><strong><code>@OneToOne</code></strong>: Relação de um para um (1:1).</li>
-                        <li><strong><code>@OneToMany</code></strong>: Relação de um para muitos (1:N).</li>
-                        <li><strong><code>@ManyToOne</code></strong>: Relação de muitos para um (N:1).</li>
-                        <li><strong><code>@ManyToMany</code></strong>: Relação de muitos para muitos (N:N).</li>
-                    </ul>
-                    <h4>Dono da Relação (<code>mappedBy</code>)</h4>
-                    <p>Em associações bidirecionais, apenas um lado é o "dono" da relação. O lado dono é aquele que contém a chave estrangeira (FK) no banco de dados e é anotado com <code>@JoinColumn</code>. O outro lado é o inverso e usa <code>mappedBy</code> para espelhar a relação, sem gerenciar a FK.</p>
-                    <pre><code>// DONO
+          <h3>5) Controller</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">package com.example.api.controller;
+
+import com.example.api.model.Category;
+import com.example.api.service.CategoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/categories")
+public class CategoryController {
+    private final CategoryService service;
+    public CategoryController(CategoryService service) { this.service = service; }
+
+    @PostMapping
+    public ResponseEntity&lt;Category&gt; createCategory(@RequestBody Category category) {
+        Category created = service.createCategory(category.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;Category&gt; getCategory(@PathVariable Long id) {
+        Category found = service.getCategory(id);
+        return ResponseEntity.ok(found);
+    }
+}
+</code></pre>
+
+          <h2>Injeção de Dependências (DI)</h2>
+          <p>No Spring Boot, prefira <strong>injeção via construtor</strong> — imutável, fácil de testar.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">@Service
+public class MatriculaService {
+    private final AlunoService alunoService;
+    public MatriculaService(AlunoService alunoService) { this.alunoService = alunoService; }
+}
+</code></pre>
+          <p>Setter: quando opcional; Campo: evite (dificulta testes).</p>
+
+          <h2>DTO, validações em DTOs, MapStruct</h2>
+          <p>DTO transporta dados entre camadas e evita expor entidades. Use Bean Validation e MapStruct para mapeamentos.</p>
+<pre><button class="copy">Copiar</button><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<pre><button class="copy">Copiar</button><code class="language-java">import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper(componentModel = "spring")
+public interface ProdutoMapper {
+    ProdutoMapper INSTANCE = Mappers.getMapper(ProdutoMapper.class);
+    Produto toEntity(ProdutoDTO dto);
+    ProdutoDTO toDTO(Produto entity);
+}
+</code></pre>
+
+          <h2>Controllers no Spring Boot</h2>
+          <p>Controller recebe a requisição, delega ao Service e retorna resposta HTTP. Mantenha finos, use DTOs e <code>ResponseEntity</code>.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">@RestController
+@RequestMapping("/api/alunos")
+public class AlunoController {
+    private final AlunoService alunoService;
+    public AlunoController(AlunoService alunoService) { this.alunoService = alunoService; }
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;AlunoResponseDTO&gt;&gt; listar() { return ResponseEntity.ok(alunoService.listar()); }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;AlunoResponseDTO&gt; buscarPorId(@PathVariable Long id) { return ResponseEntity.ok(alunoService.buscarPorId(id)); }
+
+    @PostMapping
+    public ResponseEntity&lt;AlunoResponseDTO&gt; criar(@Valid @RequestBody AlunoRequestDTO dto) {
+        AlunoResponseDTO novo = alunoService.salvar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novo);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id) { alunoService.deletar(id); }
+}
+</code></pre>
+          <div class="note">Boas práticas: ResponseEntity, validação com <code>@Valid</code>, exceções customizadas + <code>@RestControllerAdvice</code>, paginação com <code>Pageable</code>, documentação com OpenAPI.</div>
+        </div>
+
+        <div lang="en">
+          <h2>Global Exception Handling</h2>
+          <p>Use <code>@RestControllerAdvice</code> to centralize error handling and return consistent HTTP responses.</p>
+          <p>Dependency Injection: prefer <strong>constructor injection</strong>. DTOs + Bean Validation + MapStruct for mapping. Controllers must be thin and return <code>ResponseEntity</code>.</p>
+        </div>
+      </section>
+
+      <!-- =================== SPRING DATA JPA =================== -->
+      <section id="sec-spring-data-jpa">
+        <h1 data-i18n-pt="Spring Data JPA" data-i18n-en="Spring Data JPA">Spring Data JPA</h1>
+        <div class="grid-2">
+          <div lang="pt" class="visible">
+            <h2>Associações</h2>
+            <p>No JPA, associação é a relação entre entidades refletindo o relacionamento no banco.</p>
+            <ul>
+              <li><code>@OneToOne</code> → 1:1</li>
+              <li><code>@OneToMany</code> → 1:N</li>
+              <li><code>@ManyToOne</code> → N:1</li>
+              <li><code>@ManyToMany</code> → N:N</li>
+            </ul>
+            <h3>Direcionalidade</h3>
+            <p><strong>Unidirecional</strong>: apenas um lado conhece o outro. Ex.: <em>Pedido → Cliente</em>.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">@Entity
+public class Pedido {
+  @ManyToOne
+  @JoinColumn(name = "cliente_id") // cria a FK
+  private Cliente cliente;
+}
+</code></pre>
+            <p><strong>Bidirecional</strong>: ambos os lados se conhecem. Ex.: <em>Cliente ↔ Pedido</em>.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">@Entity
+public class Cliente {
+  @OneToMany(mappedBy = "cliente")
+  private List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();
+}
 @Entity
 public class Pedido {
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+  @ManyToOne
+  @JoinColumn(name = "cliente_id") // lado dono
+  private Cliente cliente;
 }
-
+</code></pre>
+            <h3>Dono da relação (mappedBy)</h3>
+            <ul>
+              <li>Dono = lado com a FK (<code>@JoinColumn</code>)</li>
+              <li>Inverso = lado com <code>mappedBy</code></li>
+            </ul>
+<pre><button class="copy">Copiar</button><code class="language-java">// DONO
+@ManyToOne
+@JoinColumn(name = "cliente_id")
+private Cliente cliente;
 // INVERSO
-@Entity
+@OneToMany(mappedBy = "cliente")
+private List&lt;Pedido&gt; pedidos;
+</code></pre>
+            <h3>Persistência &amp; Cascade</h3>
+            <p>Com <code>cascade</code> você pode salvar apenas o pai; sem, salve dependentes primeiro.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">clienteRepository.save(c); // com cascade salva cliente + pedidos
+</code></pre>
+            <h3>Fetch Type</h3>
+            <ul>
+              <li><code>EAGER</code>: carrega sempre</li>
+              <li><code>LAZY</code>: carrega sob demanda</li>
+            </ul>
+            <p>Regras recomendadas: <code>@ManyToOne</code>/<code>@OneToOne</code> → EAGER; coleções (<code>@OneToMany</code>, <code>@ManyToMany</code>) → LAZY.</p>
+<pre><button class="copy">Copiar</button><code class="language-java">@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+private List&lt;Pedido&gt; pedidos;
+</code></pre>
+            <h3>OneToOne (1:1)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@Entity
 public class Cliente {
-    @OneToMany(mappedBy = "cliente")
-    private List&lt;Pedido&gt; pedidos;
-}</code></pre>
-                    <h4>Fetch Type (Carregamento)</h4>
-                    <ul>
-                        <li><strong>EAGER:</strong> Carrega a associação junto com a entidade principal. Padrão para <code>@OneToOne</code> e <code>@ManyToOne</code>.</li>
-                        <li><strong>LAZY:</strong> Carrega a associação apenas quando é acessada. Padrão para <code>@OneToMany</code> e <code>@ManyToMany</code> (recomendado para evitar problemas de performance).</li>
-                    </ul>
-                    <h4>Cascade (Propagação de operações)</h4>
-                    <p>Define se operações como salvar (<code>PERSIST</code>) ou deletar (<code>REMOVE</code>) na entidade principal também se propagam para as entidades associadas. <code>CascadeType.ALL</code> propaga todas as operações.</p>
-                </div>
-            </div>
-        </section>
+  @Id @GeneratedValue private Long id;
+  private String nome;
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "endereco_id") // DONO
+  private Endereco endereco;
+}
+@Entity
+public class Endereco {
+  @Id @GeneratedValue private Long id;
+  private String rua;
+  @OneToOne(mappedBy = "endereco") // INVERSE
+  private Cliente cliente;
+}
+</code></pre>
+            <h3>ManyToMany (N:N)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@Entity
+public class Aluno {
+  @Id @GeneratedValue private Long id;
+  private String nome;
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinTable(name = "aluno_curso",
+    joinColumns = @JoinColumn(name = "aluno_id"),
+    inverseJoinColumns = @JoinColumn(name = "curso_id"))
+  private Set&lt;Curso&gt; cursos = new HashSet&lt;&gt;();
+}
+@Entity
+public class Curso {
+  @Id @GeneratedValue private Long id;
+  private String titulo;
+  @ManyToMany(mappedBy = "cursos")
+  private Set&lt;Aluno&gt; alunos = new HashSet&lt;&gt;();
+}
+</code></pre>
+          </div>
+          <div lang="en">
+            <h2>Associations</h2>
+            <p>Overview of JPA relationships and best practices (owner side, <code>mappedBy</code>, cascade, fetch types) with examples for OneToOne, OneToMany/ManyToOne and ManyToMany.</p>
+          </div>
+        </div>
+      </section>
 
-        <section id="camadas">
-            <h1>Estrutura de Camadas</h1>
-            <p>Uma arquitetura de camadas é uma prática de design de software que separa a aplicação em grupos lógicos de responsabilidades. No contexto de uma API REST com Spring Boot, a estrutura mais comum é baseada em "features" ou "domínios", como "Category" no seu exemplo.</p>
+      <!-- =================== ORIENTAÇÕES & BOAS PRÁTICAS =================== -->
+      <section id="sec-guidelines">
+        <h1 data-i18n-pt="Orientações e Boas Práticas" data-i18n-en="Guidelines & Best Practices">Orientações e Boas Práticas</h1>
 
-            <div class="collapsible">
-                <div class="collapsible-header">
-                    <span>O que fazer em cada camada?</span>
-                    <span>▼</span>
-                </div>
-                <div class="collapsible-content">
-                    <p>A seguir, uma explicação do papel de cada camada na sua estrutura de projeto:</p>
-                    <br>
-                    <h3><code>models</code></h3>
-                    <p>O pacote <code>models</code>, ou <code>domain</code>, é o coração da sua aplicação, onde a lógica de negócio e as estruturas de dados são definidas. Geralmente, ele é subdividido em:</p>
-                    <h4><code>entities</code></h4>
-                    <p>As <strong>Entities</strong> são classes que representam as tabelas do seu banco de dados. Elas são a representação Java de um registro, com campos mapeados para colunas usando anotações JPA como <code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, e <code>@Column</code>. Elas não devem conter lógica de negócio complexa nem ser expostas diretamente para o cliente, para evitar problemas de segurança e acoplamento.</p>
-                    <h4><code>repositories</code></h4>
-                    <p>Os <strong>Repositories</strong> são interfaces que fornecem métodos para acessar e manipular os dados no banco de dados. O Spring Data JPA cria a implementação automaticamente para você, permitindo que você defina métodos de consulta como <code>findByNomeIgnoreCase</code> sem a necessidade de escrever código SQL. Eles se comunicam com a camada de entidade para persistir ou buscar dados.</p>
-                    <h4><code>dto</code></h4>
-                    <p>Os <strong>Data Transfer Objects (DTOs)</strong> são classes que representam a estrutura de dados que será enviada ou recebida pela API. Como DTOs não são mapeados para o banco de dados, você pode personalizá-los para incluir apenas os campos necessários para uma determinada operação (ex: <code>CategoryCreateDTO</code>, <code>CategoryResponseDTO</code>). Eles servem como uma barreira entre o cliente e a camada de entidade, protegendo o modelo de domínio.</p>
-                    <h4><code>mappers</code></h4>
-                    <p>Mappers são interfaces ou classes responsáveis por converter dados entre diferentes tipos, como de um DTO para uma Entity e vice-versa. Eles ajudam a manter a separação entre as camadas, evitando que a lógica de conversão se misture na camada de serviço. Bibliotecas como <strong>MapStruct</strong> automatizam esse processo de mapeamento, reduzindo o código boilerplate.</p>
-                </div>
-            </div>
-        </section>
-    </div>
+        <div class="grid-2">
+          <div lang="pt" class="visible">
+            <h2>Estrutura em camadas</h2>
+<pre><button class="copy">Copiar</button><code class="language-text">/commom
+  ├─ exception   # @RestControllerAdvice, exceções customizadas
+  └─ util        # helpers
+/category
+  ├─ model
+  │   ├─ entities  # JPA entities (tabelas)
+  │   ├─ dto       # DTOs (Request/Response)
+  │   └─ mapper    # MapStruct (Entity &lt;-&gt; DTO)
+  ├─ services      # Regras de negócio
+  └─ resources     # Controllers (endpoints)
+</code></pre>
+            <h2>Fluxo para implementar um novo endpoint (Do Zero ao Deploy)</h2>
+            <ol>
+              <li>
+                <h3>Planejar (Jira + Git)</h3>
+                <ul>
+                  <li>Criar tarefa no Jira com critérios de aceite.</li>
+                  <li>Criar branch: <code>feature/&lt;JIRA-ID&gt;</code>.</li>
+                </ul>
+              </li>
+              <li>
+                <h3>Model (entity)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@Entity
+public class Category {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable=false, unique=true)
+  private String name;
+  // getters/setters
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>DTOs + validação</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">public record CategoryRequestDTO(
+  @NotBlank(message = "Name is mandatory") String name
+){}
+public record CategoryResponseDTO(Long id, String name){}
+</code></pre>
+              </li>
+              <li>
+                <h3>Mapper (MapStruct)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@Mapper(componentModel = "spring")
+public interface CategoryMapper {
+  Category toEntity(CategoryRequestDTO dto);
+  CategoryResponseDTO toResponse(Category entity);
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>Repository</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">public interface CategoryRepository extends JpaRepository&lt;Category, Long&gt; {
+  Optional&lt;Category&gt; findByNameIgnoreCase(String name);
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>Service (regras + exceções)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@Service
+public class CategoryService {
+  private final CategoryRepository repo;
+  private final CategoryMapper mapper;
+  public CategoryService(CategoryRepository repo, CategoryMapper mapper){
+    this.repo = repo; this.mapper = mapper;
+  }
+  @Transactional
+  public CategoryResponseDTO create(CategoryRequestDTO dto){
+    if(repo.findByNameIgnoreCase(dto.name()).isPresent())
+      throw new ConflictException("Category already exists.");
+    Category saved = repo.save(mapper.toEntity(dto));
+    return mapper.toResponse(saved);
+  }
+  public CategoryResponseDTO find(Long id){
+    Category cat = repo.findById(id).orElseThrow(() -> new NotFoundException("Category not found."));
+    return mapper.toResponse(cat);
+  }
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>Controller (resource)</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@RestController
+@RequestMapping("/categories")
+public class CategoryResource {
+  private final CategoryService service;
+  public CategoryResource(CategoryService service){ this.service = service; }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            const toggleBtn = document.getElementById('toggle-sidebar');
-            const sections = document.querySelectorAll('.content section');
-            const buttons = document.querySelectorAll('.sidebar ul li button');
-            const collapsibles = document.querySelectorAll('.collapsible');
+  @PostMapping
+  public ResponseEntity&lt;CategoryResponseDTO&gt; create(@Valid @RequestBody CategoryRequestDTO dto){
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+  }
 
-            function showContent(id) {
-                sections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                buttons.forEach(button => {
-                    button.classList.remove('active');
-                });
-                document.getElementById(id).classList.add('active');
-                document.querySelector(`button[onclick="showContent('${id}')"]`).classList.add('active');
-            }
+  @GetMapping("/{id}")
+  public ResponseEntity&lt;CategoryResponseDTO&gt; get(@PathVariable Long id){
+    return ResponseEntity.ok(service.find(id));
+  }
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>Exceções globais</h3>
+                <p>Usar <code>@RestControllerAdvice</code> e exceções customizadas (vide seção Spring Boot).</p>
+              </li>
+              <li>
+                <h3>Documentação (OpenAPI)</h3>
+<pre><button class="copy">Copiar</button><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
+  &lt;artifactId&gt;springdoc-openapi-starter-webmvc-ui&lt;/artifactId&gt;
+  &lt;version&gt;2.6.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+              </li>
+              <li>
+                <h3>Testes</h3>
+<pre><button class="copy">Copiar</button><code class="language-java">@WebMvcTest(CategoryResource.class)
+class CategoryResourceTest {
+  @Autowired MockMvc mvc;
+  @MockBean CategoryService service;
+  @Test void create_shouldReturn201() throws Exception {
+    // ... your test here
+  }
+}
+</code></pre>
+              </li>
+              <li>
+                <h3>Checklist DoD</h3>
+                <ul>
+                  <li>Task Jira movida para <em>In Review</em></li>
+                  <li>Teste unitário + integração ok</li>
+                  <li>Swagger atualizado</li>
+                  <li>Mensagens de erro padronizadas</li>
+                  <li>Branch atualizada e PR aberto com descrição</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
 
-            window.showContent = showContent;
+          <div lang="en">
+            <h2>Layered Structure</h2>
+<pre><button class="copy">Copy</button><code class="language-text">/commom
+  ├─ exception   # @RestControllerAdvice, custom exceptions
+  └─ util        # helpers
+/category
+  ├─ model
+  │   ├─ entities  # JPA entities (tables)
+  │   ├─ dto       # DTOs (Request/Response)
+  │   └─ mapper    # MapStruct (Entity &lt;-&gt; DTO)
+  ├─ services      # Business rules
+  └─ resources     # Controllers (endpoints)
+</code></pre>
+            <h2>End-to-end Endpoint Flow</h2>
+            <ol>
+              <li><strong>Plan</strong> (Jira task + branch <code>feature/&lt;JIRA-ID&gt;</code>)</li>
+              <li><strong>Entity</strong> (JPA), <strong>DTOs</strong> (+ Bean Validation)</li>
+              <li><strong>Mapper</strong> (MapStruct)</li>
+              <li><strong>Repository</strong> (JpaRepository)</li>
+              <li><strong>Service</strong> (rules + exceptions)</li>
+              <li><strong>Controller</strong> (thin, returns <code>ResponseEntity</code>)</li>
+              <li><strong>Global Exceptions</strong> (<code>@RestControllerAdvice</code>)</li>
+              <li><strong>OpenAPI</strong> docs</li>
+              <li><strong>Tests</strong> (unit + integration)</li>
+            </ol>
+          </div>
+        </div>
+      </section>
 
-            // Inicia com o primeiro tópico ativo
-            if (buttons.length > 0) {
-                showContent(buttons[0].getAttribute('onclick').match(/'(.*?)'/)[1]);
-            }
+    </main>
+  </div>
 
-            collapsibles.forEach(collapsible => {
-                const header = collapsible.querySelector('.collapsible-header');
-                const content = collapsible.querySelector('.collapsible-content');
-                const icon = header.querySelector('span:last-child');
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // --------- THEME ---------
+    const themeBtn = document.getElementById('theme');
+    function applyTheme(){
+      const light = document.documentElement.classList.contains('light');
+      themeBtn.textContent = light ? '🌙' : '☀️';
+      document.querySelector('link[href*="github.min.css"]').disabled = !light;
+      document.querySelector('link[href*="github-dark.min.css"]').disabled = light;
+    }
+    themeBtn.addEventListener('click',()=>{document.documentElement.classList.toggle('light');applyTheme();});
 
-                header.addEventListener('click', () => {
-                    const isOpen = content.classList.contains('open');
-                    
-                    // Fecha todos os outros
-                    document.querySelectorAll('.collapsible-content.open').forEach(c => {
-                        if (c !== content) {
-                            c.classList.remove('open');
-                            c.previousElementSibling.querySelector('span:last-child').textContent = '▼';
-                        }
-                    });
+    // --------- LANGUAGE ---------
+    const langBtn = document.getElementById('lang');
+    let lang = 'pt';
+    function setLang(next){
+      lang = next; langBtn.textContent = lang.toUpperCase(); document.documentElement.setAttribute('lang',lang);
+      document.querySelectorAll('[lang]').forEach(el=>{el.classList.toggle('visible', el.getAttribute('lang')===lang);});
+      // update headings based on data-i18n attributes
+      document.querySelectorAll('[data-i18n-pt]').forEach(el=>{
+        const txt = el.getAttribute(`data-i18n-${lang}`) || el.getAttribute('data-i18n-pt');
+        el.textContent = txt;
+      });
+      buildTOC();
+    }
+    langBtn.addEventListener('click',()=> setLang(lang==='pt'?'en':'pt'));
 
-                    if (isOpen) {
-                        content.classList.remove('open');
-                        icon.textContent = '▼';
-                    } else {
-                        content.classList.add('open');
-                        icon.textContent = '▲';
-                    }
-                });
-            });
+    // --------- PRINT ---------
+    document.getElementById('print').addEventListener('click',()=>window.print());
 
-            toggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('visible');
-                mainContent.classList.toggle('sidebar-visible');
-            });
-        });
-    </script>
+    // --------- COPY BUTTONS ---------
+    function wireCopy(){
+      document.querySelectorAll('pre .copy').forEach(btn=>{
+        btn.onclick = ()=>{
+          const code = btn.nextElementSibling?.innerText || '';
+          navigator.clipboard.writeText(code);
+          const old = btn.textContent; btn.textContent = (lang==='pt'?'Copiado!':'Copied!');
+          setTimeout(()=>btn.textContent=old,1300);
+        };
+      });
+    }
+
+    // --------- TOC ---------
+    const tocEl = document.getElementById('toc');
+    function buildTOC(){
+      tocEl.innerHTML='';
+      const container = document.getElementById('content');
+      const headings = [...container.querySelectorAll('section [lang].visible h1, section [lang].visible h2, section [lang].visible h3')];
+      const list = document.createElement('div');
+      let lastH2;
+      headings.forEach(h=>{
+        if(!h.id){ h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/gi,'-'); }
+        const a = document.createElement('a'); a.href = `#${h.id}`; a.textContent = h.textContent;
+        if(h.tagName==='H1'){ a.style.fontWeight='700'; }
+        if(h.tagName==='H3'){ const wrap=document.createElement('div'); wrap.className='sub'; wrap.appendChild(a); list.appendChild(wrap); }
+        else { list.appendChild(a); lastH2 = a; }
+      });
+      tocEl.appendChild(list);
+    }
+
+    // --------- SEARCH ---------
+    const q = document.getElementById('q');
+    function clearMarks(node){ node.querySelectorAll('mark').forEach(m=>{ const t=document.createTextNode(m.textContent); m.replaceWith(t);}); }
+    function markText(node, term){
+      const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
+      const ranges=[]; let n; const re=new RegExp(term,'ig');
+      while(n=walk.nextNode()){
+        const m = n.nodeValue.match(re); if(m){
+          let val=n.nodeValue; let idx; const fr=document.createDocumentFragment();
+          while((idx=val.toLowerCase().indexOf(term.toLowerCase()))>-1){
+            const before=document.createTextNode(val.slice(0,idx));
+            const mark=document.createElement('mark'); mark.textContent=val.slice(idx,idx+term.length);
+            fr.appendChild(before); fr.appendChild(mark); val=val.slice(idx+term.length);
+          }
+          fr.appendChild(document.createTextNode(val)); n.parentNode.replaceChild(fr,n);
+        }
+      }
+    }
+    q.addEventListener('input',()=>{
+      const term = q.value.trim();
+      const visible = document.querySelectorAll('[lang].visible');
+      visible.forEach(sec=>{ clearMarks(sec); sec.parentElement.style.display=''; });
+      if(!term){ return; }
+      visible.forEach(sec=>{
+        if(!sec.textContent.toLowerCase().includes(term.toLowerCase())){
+          sec.parentElement.style.display='none';
+        }else{ markText(sec,term); }
+      });
+    });
+
+    // --------- INIT ---------
+    (function init(){
+      // default dark
+      document.documentElement.classList.remove('light'); applyTheme();
+      // language
+      setLang('pt');
+      // highlight
+      hljs.highlightAll();
+      // copy buttons
+      wireCopy();
+      // initial TOC
+      buildTOC();
+    })();
+  </script>
 </body>
 </html>
