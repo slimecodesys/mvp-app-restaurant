@@ -1,783 +1,196 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Slime Code — Guia para Desenvolvedores</title>
-  <!-- Syntax highlight (light + dark will be handled via classes) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-  <style>
-    :root{
-      --bg:#0f1220;        /* dark default */
-      --card:#171a2b;
-      --text:#e9edf5;
-      --muted:#aab2c8;
-      --brand1:#00c6ff;
-      --brand2:#6a11cb;
-      --border:#2a2f45;
-    }
-    html.light{
-      --bg:#ffffff; --card:#f6f7fb; --text:#1f2430; --muted:#58627a; --border:#e6e8ef;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    header{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 16px;background:linear-gradient(90deg,var(--card),rgba(0,0,0,0));border-bottom:1px solid var(--border)}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{height:40px;aspect-ratio:1/1;object-fit:contain;border-radius:8px;background:#fff0}
-    .title{font-weight:700}
-    .controls{display:flex;align-items:center;gap:8px}
-    .control{appearance:none;border:1px solid var(--border);background:var(--card);color:var(--text);padding:8px 10px;border-radius:10px;cursor:pointer}
-    .search{min-width:220px}
-    .layout{display:grid;grid-template-columns:280px 1fr;gap:18px;padding:18px}
-    aside{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 72px);overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
-    .toc h3{margin:4px 0 10px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-    .toc a{display:block;padding:6px 8px;border-radius:8px;color:var(--text);text-decoration:none}
-    .toc a:hover{background:rgba(255,255,255,.06)}
-    .toc .sub{padding-left:10px}
-    main{max-width:1100px;margin:0 auto}
-    section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;margin:0 0 20px}
-    h1,h2,h3{line-height:1.2}
-    h1{font-size:26px;margin:0 0 10px;background:linear-gradient(90deg,var(--brand1),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    h2{font-size:22px;margin:20px 0 8px;color:var(--brand1)}
-    h3{font-size:18px;margin:18px 0 6px;color:var(--brand2)}
-    p,li{color:var(--text)}
-    code, pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    pre{position:relative;background:#0b0e19;border:1px solid var(--border);border-radius:14px;padding:14px;overflow:auto}
-    pre .copy{position:absolute;top:8px;right:8px;font-size:12px;border:1px solid var(--border);background:#11162a;color:var(--text);padding:4px 8px;border-radius:8px;cursor:pointer}
-    kbd{background:#11162a;border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:12px}
-    .note{border-left:3px solid var(--brand1);padding:10px 12px;background:rgba(0,198,255,.04);border-radius:8px}
-    .grid-2{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
-    /* language visibility */
-    [lang]{display:none}
-    [lang].visible{display:block}
-    /* search highlight */
-    mark{background:rgba(255,230,0,.3);padding:0 2px;border-radius:3px}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slime Code Dev Guide</title>
+<style>
+  :root {
+    --primary: #38d39f;
+    --primary-dark: #2aa87a;
+    --bg-light: #f8f9fa;
+    --bg-dark: #1f1f1f;
+    --text-light: #222;
+    --text-dark: #f1f1f1;
+    --card-light: #ffffff;
+    --card-dark: #2c2c2c;
+  }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-light);
+    color: var(--text-light);
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+  .toggle {
+    cursor: pointer;
+    background: #fff;
+    color: var(--primary-dark);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  .container {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  nav {
+    width: 250px;
+    position: sticky;
+    top: 10px;
+    height: 90vh;
+    overflow-y: auto;
+    background: var(--card-light);
+    padding: 15px;
+    border-radius: 12px;
+    margin-right: 20px;
+    transition: background 0.3s;
+  }
+  body.dark nav {
+    background: var(--card-dark);
+  }
+  nav h3 {
+    margin-bottom: 10px;
+  }
+  nav a {
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+  }
+  .content {
+    flex: 1;
+  }
+  .section {
+    margin-bottom: 40px;
+    border-radius: 12px;
+    background: var(--card-light);
+    padding: 20px;
+    transition: background 0.3s;
+  }
+  body.dark .section {
+    background: var(--card-dark);
+  }
+  .section h2 {
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+  }
+  pre {
+    background: #333;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  .copy-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <img src="Slime code.png" alt="Slime Code" onerror="this.style.display='none'"/>
-      <div class="title">Slime Code — Developer Guide</div>
-    </div>
-    <div class="controls">
-      <input id="q" class="control search" type="search" placeholder="Pesquisar / Search…"/>
-      <button id="lang" class="control" title="Switch language">PT</button>
-      <button id="theme" class="control" title="Toggle theme">🌙</button>
-      <button id="print" class="control" title="Print / PDF">🖨️</button>
-    </div>
-  </header>
-
-  <div class="layout">
-    <aside>
-      <div class="toc">
-        <h3>Índice / TOC</h3>
-        <div id="toc"></div>
-      </div>
-    </aside>
-
-    <main id="content">
-
-      <!-- =================== GIT =================== -->
-      <section id="sec-git">
-        <h1 data-i18n-pt="Git" data-i18n-en="Git">Git</h1>
-
-        <div class="grid-2">
-          <div lang="pt" class="visible">
-            <h2>Criar uma Branch a partir de uma (dev)</h2>
-            <p>Exemplo de fluxo alinhado ao Jira (Scrum). A nova branch deve ser o <strong>ID da tarefa</strong> em que o desenvolvedor estiver a trabalhar.</p>
-            <ol>
-              <li>
-                <p><strong>Ir para a branch base</strong> (ex.: <code>dev</code>):</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout dev</code></pre>
-              </li>
-              <li>
-                <p><strong>Atualizar a branch base</strong> com o remoto (boa prática):</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git pull origin dev</code></pre>
-              </li>
-              <li>
-                <p><strong>Criar uma nova branch</strong> a partir dela (use o ID do Jira):</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout -b &lt;JIRA-123&gt;</code></pre>
-              </li>
-              <li>
-                <p><strong>Subir a nova branch</strong> para o repositório remoto:</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git push -u origin &lt;JIRA-123&gt;</code></pre>
-              </li>
-            </ol>
-            <div class="note">Convenção sugerida: <code>feature/JIRA-123</code>, <code>fix/JIRA-456</code>, <code>chore/JIRA-789</code>.</div>
-
-            <h2>Fazer merge para Branch (dev)</h2>
-            <p>Fluxo padrão de merge no Git.</p>
-            <ol>
-              <li>
-                <p><strong>Trocar para a branch de destino</strong> (<code>dev</code>):</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git checkout dev</code></pre>
-              </li>
-              <li>
-                <p><strong>Atualizar</strong> a branch <code>dev</code> com o remoto:</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git pull origin dev</code></pre>
-              </li>
-              <li>
-                <p><strong>Fazer o merge</strong> da branch feature (ID do Jira):</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git merge &lt;JIRA-123&gt;</code></pre>
-                <p>Se não houver conflitos → merge automático. Se houver → resolva, faça <code>git add</code> nos arquivos e conclua.</p>
-              </li>
-              <li>
-                <p><strong>Subir</strong> a <code>dev</code> atualizada:</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git push origin dev</code></pre>
-              </li>
-              <li>
-                <p><strong>Limpeza de branches</strong>:</p>
-                <pre><button class="copy">Copiar</button><code class="language-bash">$ git branch -d &lt;JIRA-123&gt;
-$ git push origin --delete &lt;JIRA-123&gt;</code></pre>
-              </li>
-            </ol>
-          </div>
-
-          <div lang="en">
-            <h2>Create a Branch from <code>dev</code></h2>
-            <p>Scrum/Jira-aligned flow. Name the branch with the <strong>Jira Task ID</strong>.</p>
-            <ol>
-              <li><p>Checkout base branch:</p>
-                <pre><button class="copy">Copy</button><code class="language-bash">$ git checkout dev</code></pre>
-              </li>
-              <li><p>Update base from remote:</p>
-                <pre><button class="copy">Copy</button><code class="language-bash">$ git pull origin dev</code></pre>
-              </li>
-              <li><p>Create your feature branch:</p>
-                <pre><button class="copy">Copy</button><code class="language-bash">$ git checkout -b &lt;JIRA-123&gt;</code></pre>
-              </li>
-              <li><p>Push and set upstream:</p>
-                <pre><button class="copy">Copy</button><code class="language-bash">$ git push -u origin &lt;JIRA-123&gt;</code></pre>
-              </li>
-            </ol>
-            <div class="note">Suggested naming: <code>feature/JIRA-123</code>, <code>fix/JIRA-456</code>, <code>chore/JIRA-789</code>.</div>
-            <h2>Merge into <code>dev</code></h2>
-            <ol>
-              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git checkout dev</code></pre></li>
-              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git pull origin dev</code></pre></li>
-              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git merge &lt;JIRA-123&gt;</code></pre></li>
-              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git push origin dev</code></pre></li>
-              <li><pre><button class="copy">Copy</button><code class="language-bash">$ git branch -d &lt;JIRA-123&gt;
-$ git push origin --delete &lt;JIRA-123&gt;</code></pre></li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================== SPRING BOOT =================== -->
-      <section id="sec-spring-boot">
-        <h1 data-i18n-pt="Spring Boot" data-i18n-en="Spring Boot">Spring Boot</h1>
-
-        <div lang="pt" class="visible">
-          <h2>Tratamento global de exceções</h2>
-          <p>Implementar um tratamento global com <code>@RestControllerAdvice</code> centraliza erros e retorna respostas consistentes com o status HTTP.</p>
-
-          <h3>1) Classe de resposta de erro</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
-
-import java.time.LocalDateTime;
-
-public class ErrorResponse {
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    private String message;
-    private String path;
-
-    public ErrorResponse(int status, String error, String message, String path) {
-        this.timestamp = LocalDateTime.now();
-        this.status = status;
-        this.error = error;
-        this.message = message;
-        this.path = path;
-    }
-    // getters e setters
-}
-</code></pre>
-
-          <h3>2) Exceções personalizadas</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
-
-public class BadRequestException extends RuntimeException {
-    public BadRequestException(String message) { super(message); }
-}
-public class UnauthorizedException extends RuntimeException {
-    public UnauthorizedException(String message) { super(message); }
-}
-public class ForbiddenException extends RuntimeException {
-    public ForbiddenException(String message) { super(message); }
-}
-public class ConflictException extends RuntimeException {
-    public ConflictException(String message) { super(message); }
-}
-public class NotFoundException extends RuntimeException {
-    public NotFoundException(String message) { super(message); }
-}
-</code></pre>
-
-          <h3>3) GlobalExceptionHandler</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">package com.exemplo.api.exception;
-
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    private ResponseEntity&lt;ErrorResponse&gt; buildResponse(Exception ex, HttpStatus status, HttpServletRequest request) {
-        ErrorResponse error = new ErrorResponse(
-            status.value(),
-            status.getReasonPhrase(),
-            ex.getMessage(),
-            request.getRequestURI()
-        );
-        return ResponseEntity.status(status).body(error);
-    }
-
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleBadRequest(BadRequestException ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
-    }
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleUnauthorized(UnauthorizedException ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.UNAUTHORIZED, request);
-    }
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleForbidden(ForbiddenException ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.FORBIDDEN, request);
-    }
-    @ExceptionHandler(ConflictException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleConflict(ConflictException ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.CONFLICT, request);
-    }
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleNotFound(NotFoundException ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.NOT_FOUND, request);
-    }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity&lt;ErrorResponse&gt; handleGeneric(Exception ex, HttpServletRequest request) {
-        return buildResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-}
-</code></pre>
-
-          <h3>4) Uso em Service</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">package com.example.api.service;
-
-import com.example.api.exception.BadRequestException;
-import com.example.api.exception.ConflictException;
-import com.example.api.exception.NotFoundException;
-import com.example.api.model.Category;
-import com.example.api.repository.CategoryRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-@Service
-public class CategoryService {
-    private final CategoryRepository repository;
-    public CategoryService(CategoryRepository repository) { this.repository = repository; }
-
-    @Transactional
-    public Category createCategory(String name) {
-        if (name == null || name.isBlank()) {
-            throw new BadRequestException("Category name is missing or invalid.");
-        }
-        if (repository.findByNameIgnoreCase(name).isPresent()) {
-            throw new ConflictException("Category already exists.");
-        }
-        Category newCategory = new Category(name);
-        return repository.save(newCategory);
-    }
-
-    public Category getCategory(Long id) {
-        return repository.findById(id)
-            .orElseThrow(() -> new NotFoundException("Category not found."));
-    }
-}
-</code></pre>
-
-          <h3>5) Controller</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">package com.example.api.controller;
-
-import com.example.api.model.Category;
-import com.example.api.service.CategoryService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequestMapping("/categories")
-public class CategoryController {
-    private final CategoryService service;
-    public CategoryController(CategoryService service) { this.service = service; }
-
-    @PostMapping
-    public ResponseEntity&lt;Category&gt; createCategory(@RequestBody Category category) {
-        Category created = service.createCategory(category.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity&lt;Category&gt; getCategory(@PathVariable Long id) {
-        Category found = service.getCategory(id);
-        return ResponseEntity.ok(found);
-    }
-}
-</code></pre>
-
-          <h2>Injeção de Dependências (DI)</h2>
-          <p>No Spring Boot, prefira <strong>injeção via construtor</strong> — imutável, fácil de testar.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">@Service
-public class MatriculaService {
-    private final AlunoService alunoService;
-    public MatriculaService(AlunoService alunoService) { this.alunoService = alunoService; }
-}
-</code></pre>
-          <p>Setter: quando opcional; Campo: evite (dificulta testes).</p>
-
-          <h2>DTO, validações em DTOs, MapStruct</h2>
-          <p>DTO transporta dados entre camadas e evita expor entidades. Use Bean Validation e MapStruct para mapeamentos.</p>
-<pre><button class="copy">Copiar</button><code class="language-xml">&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<pre><button class="copy">Copiar</button><code class="language-java">import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
-@Mapper(componentModel = "spring")
-public interface ProdutoMapper {
-    ProdutoMapper INSTANCE = Mappers.getMapper(ProdutoMapper.class);
-    Produto toEntity(ProdutoDTO dto);
-    ProdutoDTO toDTO(Produto entity);
-}
-</code></pre>
-
-          <h2>Controllers no Spring Boot</h2>
-          <p>Controller recebe a requisição, delega ao Service e retorna resposta HTTP. Mantenha finos, use DTOs e <code>ResponseEntity</code>.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">@RestController
-@RequestMapping("/api/alunos")
-public class AlunoController {
-    private final AlunoService alunoService;
-    public AlunoController(AlunoService alunoService) { this.alunoService = alunoService; }
-
-    @GetMapping
-    public ResponseEntity&lt;List&lt;AlunoResponseDTO&gt;&gt; listar() { return ResponseEntity.ok(alunoService.listar()); }
-
-    @GetMapping("/{id}")
-    public ResponseEntity&lt;AlunoResponseDTO&gt; buscarPorId(@PathVariable Long id) { return ResponseEntity.ok(alunoService.buscarPorId(id)); }
-
-    @PostMapping
-    public ResponseEntity&lt;AlunoResponseDTO&gt; criar(@Valid @RequestBody AlunoRequestDTO dto) {
-        AlunoResponseDTO novo = alunoService.salvar(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novo);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id) { alunoService.deletar(id); }
-}
-</code></pre>
-          <div class="note">Boas práticas: ResponseEntity, validação com <code>@Valid</code>, exceções customizadas + <code>@RestControllerAdvice</code>, paginação com <code>Pageable</code>, documentação com OpenAPI.</div>
-        </div>
-
-        <div lang="en">
-          <h2>Global Exception Handling</h2>
-          <p>Use <code>@RestControllerAdvice</code> to centralize error handling and return consistent HTTP responses.</p>
-          <p>Dependency Injection: prefer <strong>constructor injection</strong>. DTOs + Bean Validation + MapStruct for mapping. Controllers must be thin and return <code>ResponseEntity</code>.</p>
-        </div>
-      </section>
-
-      <!-- =================== SPRING DATA JPA =================== -->
-      <section id="sec-spring-data-jpa">
-        <h1 data-i18n-pt="Spring Data JPA" data-i18n-en="Spring Data JPA">Spring Data JPA</h1>
-        <div class="grid-2">
-          <div lang="pt" class="visible">
-            <h2>Associações</h2>
-            <p>No JPA, associação é a relação entre entidades refletindo o relacionamento no banco.</p>
-            <ul>
-              <li><code>@OneToOne</code> → 1:1</li>
-              <li><code>@OneToMany</code> → 1:N</li>
-              <li><code>@ManyToOne</code> → N:1</li>
-              <li><code>@ManyToMany</code> → N:N</li>
-            </ul>
-            <h3>Direcionalidade</h3>
-            <p><strong>Unidirecional</strong>: apenas um lado conhece o outro. Ex.: <em>Pedido → Cliente</em>.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">@Entity
-public class Pedido {
-  @ManyToOne
-  @JoinColumn(name = "cliente_id") // cria a FK
-  private Cliente cliente;
-}
-</code></pre>
-            <p><strong>Bidirecional</strong>: ambos os lados se conhecem. Ex.: <em>Cliente ↔ Pedido</em>.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">@Entity
-public class Cliente {
-  @OneToMany(mappedBy = "cliente")
-  private List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();
-}
-@Entity
-public class Pedido {
-  @ManyToOne
-  @JoinColumn(name = "cliente_id") // lado dono
-  private Cliente cliente;
-}
-</code></pre>
-            <h3>Dono da relação (mappedBy)</h3>
-            <ul>
-              <li>Dono = lado com a FK (<code>@JoinColumn</code>)</li>
-              <li>Inverso = lado com <code>mappedBy</code></li>
-            </ul>
-<pre><button class="copy">Copiar</button><code class="language-java">// DONO
-@ManyToOne
-@JoinColumn(name = "cliente_id")
-private Cliente cliente;
-// INVERSO
-@OneToMany(mappedBy = "cliente")
-private List&lt;Pedido&gt; pedidos;
-</code></pre>
-            <h3>Persistência &amp; Cascade</h3>
-            <p>Com <code>cascade</code> você pode salvar apenas o pai; sem, salve dependentes primeiro.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">clienteRepository.save(c); // com cascade salva cliente + pedidos
-</code></pre>
-            <h3>Fetch Type</h3>
-            <ul>
-              <li><code>EAGER</code>: carrega sempre</li>
-              <li><code>LAZY</code>: carrega sob demanda</li>
-            </ul>
-            <p>Regras recomendadas: <code>@ManyToOne</code>/<code>@OneToOne</code> → EAGER; coleções (<code>@OneToMany</code>, <code>@ManyToMany</code>) → LAZY.</p>
-<pre><button class="copy">Copiar</button><code class="language-java">@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-private List&lt;Pedido&gt; pedidos;
-</code></pre>
-            <h3>OneToOne (1:1)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@Entity
-public class Cliente {
-  @Id @GeneratedValue private Long id;
-  private String nome;
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "endereco_id") // DONO
-  private Endereco endereco;
-}
-@Entity
-public class Endereco {
-  @Id @GeneratedValue private Long id;
-  private String rua;
-  @OneToOne(mappedBy = "endereco") // INVERSE
-  private Cliente cliente;
-}
-</code></pre>
-            <h3>ManyToMany (N:N)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@Entity
-public class Aluno {
-  @Id @GeneratedValue private Long id;
-  private String nome;
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(name = "aluno_curso",
-    joinColumns = @JoinColumn(name = "aluno_id"),
-    inverseJoinColumns = @JoinColumn(name = "curso_id"))
-  private Set&lt;Curso&gt; cursos = new HashSet&lt;&gt;();
-}
-@Entity
-public class Curso {
-  @Id @GeneratedValue private Long id;
-  private String titulo;
-  @ManyToMany(mappedBy = "cursos")
-  private Set&lt;Aluno&gt; alunos = new HashSet&lt;&gt;();
-}
-</code></pre>
-          </div>
-          <div lang="en">
-            <h2>Associations</h2>
-            <p>Overview of JPA relationships and best practices (owner side, <code>mappedBy</code>, cascade, fetch types) with examples for OneToOne, OneToMany/ManyToOne and ManyToMany.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- =================== ORIENTAÇÕES & BOAS PRÁTICAS =================== -->
-      <section id="sec-guidelines">
-        <h1 data-i18n-pt="Orientações e Boas Práticas" data-i18n-en="Guidelines & Best Practices">Orientações e Boas Práticas</h1>
-
-        <div class="grid-2">
-          <div lang="pt" class="visible">
-            <h2>Estrutura em camadas</h2>
-<pre><button class="copy">Copiar</button><code class="language-text">/commom
-  ├─ exception   # @RestControllerAdvice, exceções customizadas
-  └─ util        # helpers
-/category
-  ├─ model
-  │   ├─ entities  # JPA entities (tabelas)
-  │   ├─ dto       # DTOs (Request/Response)
-  │   └─ mapper    # MapStruct (Entity &lt;-&gt; DTO)
-  ├─ services      # Regras de negócio
-  └─ resources     # Controllers (endpoints)
-</code></pre>
-            <h2>Fluxo para implementar um novo endpoint (Do Zero ao Deploy)</h2>
-            <ol>
-              <li>
-                <h3>Planejar (Jira + Git)</h3>
-                <ul>
-                  <li>Criar tarefa no Jira com critérios de aceite.</li>
-                  <li>Criar branch: <code>feature/&lt;JIRA-ID&gt;</code>.</li>
-                </ul>
-              </li>
-              <li>
-                <h3>Model (entity)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@Entity
-public class Category {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  @Column(nullable=false, unique=true)
-  private String name;
-  // getters/setters
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>DTOs + validação</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">public record CategoryRequestDTO(
-  @NotBlank(message = "Name is mandatory") String name
-){}
-public record CategoryResponseDTO(Long id, String name){}
-</code></pre>
-              </li>
-              <li>
-                <h3>Mapper (MapStruct)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@Mapper(componentModel = "spring")
-public interface CategoryMapper {
-  Category toEntity(CategoryRequestDTO dto);
-  CategoryResponseDTO toResponse(Category entity);
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>Repository</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">public interface CategoryRepository extends JpaRepository&lt;Category, Long&gt; {
-  Optional&lt;Category&gt; findByNameIgnoreCase(String name);
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>Service (regras + exceções)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@Service
-public class CategoryService {
-  private final CategoryRepository repo;
-  private final CategoryMapper mapper;
-  public CategoryService(CategoryRepository repo, CategoryMapper mapper){
-    this.repo = repo; this.mapper = mapper;
-  }
-  @Transactional
-  public CategoryResponseDTO create(CategoryRequestDTO dto){
-    if(repo.findByNameIgnoreCase(dto.name()).isPresent())
-      throw new ConflictException("Category already exists.");
-    Category saved = repo.save(mapper.toEntity(dto));
-    return mapper.toResponse(saved);
-  }
-  public CategoryResponseDTO find(Long id){
-    Category cat = repo.findById(id).orElseThrow(() -> new NotFoundException("Category not found."));
-    return mapper.toResponse(cat);
-  }
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>Controller (resource)</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@RestController
-@RequestMapping("/categories")
-public class CategoryResource {
-  private final CategoryService service;
-  public CategoryResource(CategoryService service){ this.service = service; }
-
-  @PostMapping
-  public ResponseEntity&lt;CategoryResponseDTO&gt; create(@Valid @RequestBody CategoryRequestDTO dto){
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity&lt;CategoryResponseDTO&gt; get(@PathVariable Long id){
-    return ResponseEntity.ok(service.find(id));
-  }
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>Exceções globais</h3>
-                <p>Usar <code>@RestControllerAdvice</code> e exceções customizadas (vide seção Spring Boot).</p>
-              </li>
-              <li>
-                <h3>Documentação (OpenAPI)</h3>
-<pre><button class="copy">Copiar</button><code class="language-xml">&lt;dependency&gt;
-  &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
-  &lt;artifactId&gt;springdoc-openapi-starter-webmvc-ui&lt;/artifactId&gt;
-  &lt;version&gt;2.6.0&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-              </li>
-              <li>
-                <h3>Testes</h3>
-<pre><button class="copy">Copiar</button><code class="language-java">@WebMvcTest(CategoryResource.class)
-class CategoryResourceTest {
-  @Autowired MockMvc mvc;
-  @MockBean CategoryService service;
-  @Test void create_shouldReturn201() throws Exception {
-    // ... your test here
-  }
-}
-</code></pre>
-              </li>
-              <li>
-                <h3>Checklist DoD</h3>
-                <ul>
-                  <li>Task Jira movida para <em>In Review</em></li>
-                  <li>Teste unitário + integração ok</li>
-                  <li>Swagger atualizado</li>
-                  <li>Mensagens de erro padronizadas</li>
-                  <li>Branch atualizada e PR aberto com descrição</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-
-          <div lang="en">
-            <h2>Layered Structure</h2>
-<pre><button class="copy">Copy</button><code class="language-text">/commom
-  ├─ exception   # @RestControllerAdvice, custom exceptions
-  └─ util        # helpers
-/category
-  ├─ model
-  │   ├─ entities  # JPA entities (tables)
-  │   ├─ dto       # DTOs (Request/Response)
-  │   └─ mapper    # MapStruct (Entity &lt;-&gt; DTO)
-  ├─ services      # Business rules
-  └─ resources     # Controllers (endpoints)
-</code></pre>
-            <h2>End-to-end Endpoint Flow</h2>
-            <ol>
-              <li><strong>Plan</strong> (Jira task + branch <code>feature/&lt;JIRA-ID&gt;</code>)</li>
-              <li><strong>Entity</strong> (JPA), <strong>DTOs</strong> (+ Bean Validation)</li>
-              <li><strong>Mapper</strong> (MapStruct)</li>
-              <li><strong>Repository</strong> (JpaRepository)</li>
-              <li><strong>Service</strong> (rules + exceptions)</li>
-              <li><strong>Controller</strong> (thin, returns <code>ResponseEntity</code>)</li>
-              <li><strong>Global Exceptions</strong> (<code>@RestControllerAdvice</code>)</li>
-              <li><strong>OpenAPI</strong> docs</li>
-              <li><strong>Tests</strong> (unit + integration)</li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-    </main>
+<header>
+  <span>📘 Slime Code Developer Guide</span>
+  <div>
+    <button class="toggle" onclick="toggleTheme()">🌙 / ☀️</button>
+    <button class="toggle" onclick="toggleLang()">PT / EN</button>
   </div>
+</header>
+<div class="container">
+  <nav>
+    <h3>Índice</h3>
+    <a href="#git">Git</a>
+    <a href="#spring">Spring Boot</a>
+    <a href="#jpa">Spring Data JPA</a>
+    <a href="#boas-praticas">Boas Práticas</a>
+  </nav>
+  <div class="content">
+    <section class="section" id="git">
+      <h2>Git</h2>
+      <h3>1. Criar Branch a partir da dev</h3>
+      <pre>$ git checkout dev
+$ git pull origin dev
+$ git checkout -b feature/JIRA-123
+$ git push -u origin feature/JIRA-123</pre>
+      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    // --------- THEME ---------
-    const themeBtn = document.getElementById('theme');
-    function applyTheme(){
-      const light = document.documentElement.classList.contains('light');
-      themeBtn.textContent = light ? '🌙' : '☀️';
-      document.querySelector('link[href*="github.min.css"]').disabled = !light;
-      document.querySelector('link[href*="github-dark.min.css"]').disabled = light;
-    }
-    themeBtn.addEventListener('click',()=>{document.documentElement.classList.toggle('light');applyTheme();});
+      <h3>2. Merge para dev</h3>
+      <pre>$ git checkout dev
+$ git pull origin dev
+$ git merge feature/JIRA-123
+# Resolver conflitos se houver
+$ git push origin dev
+$ git branch -d feature/JIRA-123
+$ git push origin --delete feature/JIRA-123</pre>
+      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+    </section>
 
-    // --------- LANGUAGE ---------
-    const langBtn = document.getElementById('lang');
-    let lang = 'pt';
-    function setLang(next){
-      lang = next; langBtn.textContent = lang.toUpperCase(); document.documentElement.setAttribute('lang',lang);
-      document.querySelectorAll('[lang]').forEach(el=>{el.classList.toggle('visible', el.getAttribute('lang')===lang);});
-      // update headings based on data-i18n attributes
-      document.querySelectorAll('[data-i18n-pt]').forEach(el=>{
-        const txt = el.getAttribute(`data-i18n-${lang}`) || el.getAttribute('data-i18n-pt');
-        el.textContent = txt;
-      });
-      buildTOC();
-    }
-    langBtn.addEventListener('click',()=> setLang(lang==='pt'?'en':'pt'));
+    <section class="section" id="spring">
+      <h2>Spring Boot</h2>
+      <p>Configure o projeto com Spring Web, Spring Data JPA, Validation, Lombok.</p>
+    </section>
 
-    // --------- PRINT ---------
-    document.getElementById('print').addEventListener('click',()=>window.print());
+    <section class="section" id="jpa">
+      <h2>Spring Data JPA</h2>
+      <h3>Associações</h3>
+      <p><strong>@OneToOne</strong>, <strong>@OneToMany</strong>, <strong>@ManyToOne</strong>, <strong>@ManyToMany</strong></p>
+      <pre>@Entity
+public class Cliente {
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos;
+}</pre>
+      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+    </section>
 
-    // --------- COPY BUTTONS ---------
-    function wireCopy(){
-      document.querySelectorAll('pre .copy').forEach(btn=>{
-        btn.onclick = ()=>{
-          const code = btn.nextElementSibling?.innerText || '';
-          navigator.clipboard.writeText(code);
-          const old = btn.textContent; btn.textContent = (lang==='pt'?'Copiado!':'Copied!');
-          setTimeout(()=>btn.textContent=old,1300);
-        };
-      });
-    }
-
-    // --------- TOC ---------
-    const tocEl = document.getElementById('toc');
-    function buildTOC(){
-      tocEl.innerHTML='';
-      const container = document.getElementById('content');
-      const headings = [...container.querySelectorAll('section [lang].visible h1, section [lang].visible h2, section [lang].visible h3')];
-      const list = document.createElement('div');
-      let lastH2;
-      headings.forEach(h=>{
-        if(!h.id){ h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/gi,'-'); }
-        const a = document.createElement('a'); a.href = `#${h.id}`; a.textContent = h.textContent;
-        if(h.tagName==='H1'){ a.style.fontWeight='700'; }
-        if(h.tagName==='H3'){ const wrap=document.createElement('div'); wrap.className='sub'; wrap.appendChild(a); list.appendChild(wrap); }
-        else { list.appendChild(a); lastH2 = a; }
-      });
-      tocEl.appendChild(list);
-    }
-
-    // --------- SEARCH ---------
-    const q = document.getElementById('q');
-    function clearMarks(node){ node.querySelectorAll('mark').forEach(m=>{ const t=document.createTextNode(m.textContent); m.replaceWith(t);}); }
-    function markText(node, term){
-      const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
-      const ranges=[]; let n; const re=new RegExp(term,'ig');
-      while(n=walk.nextNode()){
-        const m = n.nodeValue.match(re); if(m){
-          let val=n.nodeValue; let idx; const fr=document.createDocumentFragment();
-          while((idx=val.toLowerCase().indexOf(term.toLowerCase()))>-1){
-            const before=document.createTextNode(val.slice(0,idx));
-            const mark=document.createElement('mark'); mark.textContent=val.slice(idx,idx+term.length);
-            fr.appendChild(before); fr.appendChild(mark); val=val.slice(idx+term.length);
-          }
-          fr.appendChild(document.createTextNode(val)); n.parentNode.replaceChild(fr,n);
-        }
-      }
-    }
-    q.addEventListener('input',()=>{
-      const term = q.value.trim();
-      const visible = document.querySelectorAll('[lang].visible');
-      visible.forEach(sec=>{ clearMarks(sec); sec.parentElement.style.display=''; });
-      if(!term){ return; }
-      visible.forEach(sec=>{
-        if(!sec.textContent.toLowerCase().includes(term.toLowerCase())){
-          sec.parentElement.style.display='none';
-        }else{ markText(sec,term); }
-      });
-    });
-
-    // --------- INIT ---------
-    (function init(){
-      // default dark
-      document.documentElement.classList.remove('light'); applyTheme();
-      // language
-      setLang('pt');
-      // highlight
-      hljs.highlightAll();
-      // copy buttons
-      wireCopy();
-      // initial TOC
-      buildTOC();
-    })();
-  </script>
+    <section class="section" id="boas-praticas">
+      <h2>Orientações e Boas Práticas</h2>
+      <ol>
+        <li>Criar DTO no pacote <code>dto</code></li>
+        <li>Criar Entity no pacote <code>entities</code></li>
+        <li>Adicionar Mapper (ex.: MapStruct)</li>
+        <li>Implementar Service com regras de negócio</li>
+        <li>Criar Resource (Controller) e expor endpoints</li>
+      </ol>
+    </section>
+  </div>
+</div>
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+}
+function toggleLang() {
+  alert('Switch EN/PT em breve');
+}
+function copyCode(btn) {
+  const code = btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(code);
+  btn.innerText = 'Copiado!';
+  setTimeout(() => btn.innerText = 'Copiar', 1500);
+}
+</script>
 </body>
 </html>
