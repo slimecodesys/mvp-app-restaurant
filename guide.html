@@ -1,196 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Slime Code Dev Guide</title>
-<style>
-  :root {
-    --primary: #38d39f;
-    --primary-dark: #2aa87a;
-    --bg-light: #f8f9fa;
-    --bg-dark: #1f1f1f;
-    --text-light: #222;
-    --text-dark: #f1f1f1;
-    --card-light: #ffffff;
-    --card-dark: #2c2c2c;
-  }
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: var(--bg-light);
-    color: var(--text-light);
-    transition: background 0.3s, color 0.3s;
-  }
-  body.dark {
-    background: var(--bg-dark);
-    color: var(--text-dark);
-  }
-  header {
-    background: var(--primary);
-    color: #fff;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2rem;
-  }
-  .toggle {
-    cursor: pointer;
-    background: #fff;
-    color: var(--primary-dark);
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-  }
-  .container {
-    display: flex;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  nav {
-    width: 250px;
-    position: sticky;
-    top: 10px;
-    height: 90vh;
-    overflow-y: auto;
-    background: var(--card-light);
-    padding: 15px;
-    border-radius: 12px;
-    margin-right: 20px;
-    transition: background 0.3s;
-  }
-  body.dark nav {
-    background: var(--card-dark);
-  }
-  nav h3 {
-    margin-bottom: 10px;
-  }
-  nav a {
-    display: block;
-    padding: 8px 0;
-    text-decoration: none;
-    color: var(--primary-dark);
-    font-weight: 500;
-  }
-  .content {
-    flex: 1;
-  }
-  .section {
-    margin-bottom: 40px;
-    border-radius: 12px;
-    background: var(--card-light);
-    padding: 20px;
-    transition: background 0.3s;
-  }
-  body.dark .section {
-    background: var(--card-dark);
-  }
-  .section h2 {
-    color: var(--primary-dark);
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 8px;
-  }
-  pre {
-    background: #333;
-    color: #f8f8f2;
-    padding: 15px;
-    border-radius: 8px;
-    overflow-x: auto;
-  }
-  .copy-btn {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 6px 10px;
-    margin-top: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlimeCode Dev Guide</title>
+    <style>
+        :root {
+            --primary-color: #00c853; /* Verde Slime */
+            --bg-light: #f9f9f9;
+            --bg-dark: #1e1e1e;
+            --text-light: #333;
+            --text-dark: #f1f1f1;
+            --card-light: #fff;
+            --card-dark: #2c2c2c;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card-light);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 600px;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .card {
+            background: var(--card-dark);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #00b44d;
+        }
+
+        .toggle-theme {
+            margin-top: 20px;
+            padding: 10px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #ddd;
+        }
+
+        .dark-mode .toggle-theme {
+            background: #444;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-<header>
-  <span>📘 Slime Code Developer Guide</span>
-  <div>
-    <button class="toggle" onclick="toggleTheme()">🌙 / ☀️</button>
-    <button class="toggle" onclick="toggleLang()">PT / EN</button>
-  </div>
-</header>
-<div class="container">
-  <nav>
-    <h3>Índice</h3>
-    <a href="#git">Git</a>
-    <a href="#spring">Spring Boot</a>
-    <a href="#jpa">Spring Data JPA</a>
-    <a href="#boas-praticas">Boas Práticas</a>
-  </nav>
-  <div class="content">
-    <section class="section" id="git">
-      <h2>Git</h2>
-      <h3>1. Criar Branch a partir da dev</h3>
-      <pre>$ git checkout dev
-$ git pull origin dev
-$ git checkout -b feature/JIRA-123
-$ git push -u origin feature/JIRA-123</pre>
-      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+    <div class="container">
+        <div class="card">
+            <h1>SlimeCode Dev Guide</h1>
+            <p>
+                Este guia foi criado para ajudar desenvolvedores a seguir boas práticas, fluxos de trabalho com Git,
+                padrões em Spring Boot e JPA, e muito mais.
+                <br><br>
+                Clique no botão abaixo para acessar o guia completo.
+            </p>
+            <a class="button" href="https://1drv.ms/o/c/b7ea16946287e7a0/Ep5wJsKGCf9EtBsIr_-CIVQBxbPZRgLVUBu89LQVWA4e6Q?e=7RQx5m" target="_blank">Acessar Guia Completo</a>
+            <br>
+            <button class="toggle-theme" onclick="toggleTheme()">Alternar Claro/Escuro</button>
+        </div>
+    </div>
 
-      <h3>2. Merge para dev</h3>
-      <pre>$ git checkout dev
-$ git pull origin dev
-$ git merge feature/JIRA-123
-# Resolver conflitos se houver
-$ git push origin dev
-$ git branch -d feature/JIRA-123
-$ git push origin --delete feature/JIRA-123</pre>
-      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-    </section>
-
-    <section class="section" id="spring">
-      <h2>Spring Boot</h2>
-      <p>Configure o projeto com Spring Web, Spring Data JPA, Validation, Lombok.</p>
-    </section>
-
-    <section class="section" id="jpa">
-      <h2>Spring Data JPA</h2>
-      <h3>Associações</h3>
-      <p><strong>@OneToOne</strong>, <strong>@OneToMany</strong>, <strong>@ManyToOne</strong>, <strong>@ManyToMany</strong></p>
-      <pre>@Entity
-public class Cliente {
-    @OneToMany(mappedBy = "cliente")
-    private List<Pedido> pedidos;
-}</pre>
-      <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-    </section>
-
-    <section class="section" id="boas-praticas">
-      <h2>Orientações e Boas Práticas</h2>
-      <ol>
-        <li>Criar DTO no pacote <code>dto</code></li>
-        <li>Criar Entity no pacote <code>entities</code></li>
-        <li>Adicionar Mapper (ex.: MapStruct)</li>
-        <li>Implementar Service com regras de negócio</li>
-        <li>Criar Resource (Controller) e expor endpoints</li>
-      </ol>
-    </section>
-  </div>
-</div>
-<script>
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-}
-function toggleLang() {
-  alert('Switch EN/PT em breve');
-}
-function copyCode(btn) {
-  const code = btn.previousElementSibling.innerText;
-  navigator.clipboard.writeText(code);
-  btn.innerText = 'Copiado!';
-  setTimeout(() => btn.innerText = 'Copiar', 1500);
-}
-</script>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>
